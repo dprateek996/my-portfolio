@@ -58,3 +58,41 @@ export const EXPERIENCE = [
 export const TECH_STACK = [
     "React", "Next.js", "TypeScript", "Node.js", "AWS", "Docker", "Kubernetes", "MongoDB", "PostgreSQL", "Tailwind", "Redis", "Jenkins"
 ];
+
+export const EXTRA_PROJECTS = [
+    {
+        title: "Pinterest Backend",
+        description: "Robust REST API for a social image platform. Features Passport.js auth, MongoDB schemas, and session management.",
+        tech: ["Node.js", "Express", "MongoDB", "Passport.js"],
+        link: "https://github.com/dprateek996/Pinterest-Backend",
+        repo: "https://github.com/dprateek996/Pinterest-Backend"
+    },
+    {
+        title: "Perfume Gallery",
+        description: "Full-stack e-commerce platform for luxury fragrances. Includes product management, cart logic, and responsive UI.",
+        tech: ["React", "Node.js", "Express", "CSS Modules"],
+        link: "https://perfume-gallery.vercel.app",
+        repo: "https://github.com/dprateek996/perfume-gallery"
+    },
+    {
+        title: "Realtime Tracker",
+        description: "Live geolocation tracking application using WebSockets to broadcast user movements in real-time.",
+        tech: ["Node.js", "Socket.io", "Leaflet Maps"],
+        link: "https://github.com/dprateek996/Realtime-Tracker",
+        repo: "https://github.com/dprateek996/Realtime-Tracker"
+    },
+    {
+        title: "JS Interactive Suite",
+        description: "A collection of dynamic frontend apps including a Weather Dashboard, Quiz Engine, and Pokemon Searcher.",
+        tech: ["JavaScript (ES6+)", "DOM Manipulation", "Public APIs"],
+        link: "https://github.com/dprateek996/js-mini-projects",
+        repo: "https://github.com/dprateek996/js-mini-projects"
+    },
+    {
+        title: "MassiveMusic Landing",
+        description: "High-fidelity recreation of the MassiveMusic interface, focusing on pixel-perfect CSS and responsive layouts.",
+        tech: ["HTML5", "Advanced CSS", "Responsive Design"],
+        link: "https://github.com/dprateek996/landing-pages-massivemusic",
+        repo: "https://github.com/dprateek996/landing-pages-massivemusic"
+    }
+];
