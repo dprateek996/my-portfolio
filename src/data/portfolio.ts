@@ -1,4 +1,7 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { VoiceTrackerDiagram } from "@/components/diagrams/VoiceTrackerDiagram";
+import { NexusNoteDiagram } from "@/components/diagrams/NexusNoteDiagram";
+import { ChatExporterDiagram } from "@/components/diagrams/ChatExporterDiagram";
 
 export const PERSONAL_INFO = {
     name: "Prateek Dwivedi",
@@ -21,7 +24,7 @@ export const PROJECTS = [
         tech: ["React", "Node.js", "MongoDB", "Web Speech API"],
         link: "https://github.com/dprateek996/voice-expense-tracker",
         gradient: "from-blue-500/20 to-cyan-500/20",
-        hasArchitectureDiagram: true,
+        Diagram: VoiceTrackerDiagram,
     },
     {
         id: "nexusnote",
@@ -30,7 +33,7 @@ export const PROJECTS = [
         tech: ["Next.js", "TypeScript", "Tailwind", "Zustand"],
         link: "https://github.com/dprateek996/nexusnote",
         gradient: "from-purple-500/20 to-pink-500/20",
-        hasArchitectureDiagram: false,
+        Diagram: NexusNoteDiagram,
     },
     {
         id: "chat-exporter",
@@ -39,7 +42,7 @@ export const PROJECTS = [
         tech: ["JavaScript", "Manifest V3", "GenAI", "Chrome API"],
         link: "https://github.com/dprateek996/chat_exporter",
         gradient: "from-emerald-500/20 to-green-500/20",
-        hasArchitectureDiagram: false,
+        Diagram: ChatExporterDiagram,
     },
 ];
 
