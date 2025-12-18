@@ -6,7 +6,8 @@ import { ChatExporterDiagram } from "@/components/diagrams/ChatExporterDiagram";
 export const PERSONAL_INFO = {
     name: "Prateek Dwivedi",
     title: "Full Stack Engineer",
-    headline: "Building scalable systems with a 0→1 mindset.",
+    headline: "I learn. I build. I break. I fix. I ship.",
+    subHeadline: "Turning vague ideas into reliable software.",
     email: "dprateek996@gmail.com",
     socials: [
         { name: "GitHub", href: "https://github.com/dprateek996", icon: Github },
@@ -25,6 +26,7 @@ export const PROJECTS = [
         link: "https://github.com/dprateek996/voice-expense-tracker",
         gradient: "from-blue-500/20 to-cyan-500/20",
         Diagram: VoiceTrackerDiagram,
+        featured: true,
     },
     {
         id: "nexusnote",
@@ -51,7 +53,10 @@ export const EXPERIENCE = [
         company: "Rmak Solutions",
         role: "Software Development Intern",
         date: "May 2024 - Jun 2024",
-        desc: "Engineered a responsive web app boosting engagement by 18%. Optimized MongoDB aggregation pipelines reducing query time by 25%.",
+        bullets: [
+            "Increased user engagement by 18% via responsive redesign of the core dashboard.",
+            "Reduced MongoDB query time by 25% using optimized aggregation pipelines.",
+        ]
     },
 ];
 
@@ -81,18 +86,4 @@ export const EXTRA_PROJECTS = [
         link: "https://github.com/dprateek996/Realtime-Tracker",
         repo: "https://github.com/dprateek996/Realtime-Tracker"
     },
-    {
-        title: "JS Interactive Suite",
-        description: "A collection of dynamic frontend apps including a Weather Dashboard, Quiz Engine, and Pokemon Searcher.",
-        tech: ["JavaScript (ES6+)", "DOM Manipulation", "Public APIs"],
-        link: "https://github.com/dprateek996/js-mini-projects",
-        repo: "https://github.com/dprateek996/js-mini-projects"
-    },
-    {
-        title: "MassiveMusic Landing",
-        description: "High-fidelity recreation of the MassiveMusic interface, focusing on pixel-perfect CSS and responsive layouts.",
-        tech: ["HTML5", "Advanced CSS", "Responsive Design"],
-        link: "https://github.com/dprateek996/landing-pages-massivemusic",
-        repo: "https://github.com/dprateek996/landing-pages-massivemusic"
-    }
 ];
