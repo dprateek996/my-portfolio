@@ -1,7 +1,7 @@
 import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Terminal, MapPin, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { ArrowUpRight, Terminal, MapPin } from "lucide-react";
 import dynamic from 'next/dynamic';
 
 import { Header } from "@/components/Header";
@@ -60,11 +60,11 @@ export default function Portfolio() {
           <FloatingDock />
 
           {/* CENTERED BENTO CONTAINER */}
-          <div className="max-w-6xl mx-auto px-4 sm:px-6 py-8 md:py-16">
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-16">
 
             {/* HERO - Compact & Centered */}
             <motion.section
-              className="text-center mb-12 md:mb-16"
+              className="text-center mb-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
@@ -79,7 +79,7 @@ export default function Portfolio() {
               </div>
 
               {/* Name */}
-              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500`}>
+              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500`}>
                 {PERSONAL_INFO.name}
               </h1>
 
@@ -108,169 +108,131 @@ export default function Portfolio() {
               </div>
             </motion.section>
 
-            {/* BENTO GRID */}
-            <section className="grid grid-cols-12 gap-4">
-
-              {/* Row 1: Location + GitHub Activity + Tech Stack */}
-
-              {/* Location Card (3 cols) */}
-              <SpotlightCard className="col-span-12 md:col-span-3 p-5 flex flex-col justify-between min-h-[160px]">
-                <div className="flex justify-between items-start">
-                  <div className="p-2 bg-zinc-800/80 rounded-lg border border-zinc-700/50">
-                    <MapPin size={18} className="text-emerald-500" />
+            {/* ABOUT SECTION - Full Width Horizontal */}
+            <section className="mb-10">
+              <SpotlightCard className="p-6 md:p-8">
+                <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
+                  {/* About Text */}
+                  <div className="flex-1">
+                    <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-3`}>About</h2>
+                    <p className="text-zinc-400 leading-relaxed text-sm md:text-base">
+                      I'm a Full Stack Engineer based in <span className="text-emerald-400 font-medium">India</span> who loves building products that solve real problems.
+                      I work across the entire development lifecycle — from UI/UX to deployment — with a focus on shipping fast and learning faster.
+                    </p>
                   </div>
-                  <div className="animate-pulse w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_#10b981]"></div>
-                </div>
-                <div className="mt-auto">
-                  <h3 className={`${spaceGrotesk.className} text-3xl font-bold text-white`}>India</h3>
-                  <p className="text-xs text-emerald-400 font-mono mt-1">● Open to Remote</p>
-                </div>
-              </SpotlightCard>
-
-              {/* GitHub Activity (5 cols) */}
-              <SpotlightCard className="col-span-12 md:col-span-5 p-5 min-h-[160px] flex flex-col">
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className={`${spaceGrotesk.className} text-lg font-bold text-zinc-300`}>GitHub Activity</h3>
-                  <a href="https://github.com/dprateek996" target="_blank" className="text-zinc-500 hover:text-white transition-colors">
-                    <ArrowUpRight size={16} />
-                  </a>
-                </div>
-                <div className="w-full overflow-hidden opacity-80 hover:opacity-100 transition-opacity mt-auto">
-                  <ActivityCalendar
-                    data={calendarData}
-                    loading={calendarData.length === 0}
-                    blockSize={9}
-                    blockMargin={3}
-                    theme={{
-                      light: ['#18181b', '#27272a', '#3f3f46', '#52525b', '#71717a'],
-                      dark: ['#27272a', '#064e3b', '#065f46', '#059669', '#10b981'],
-                    }}
-                    colorScheme="dark"
-                    showWeekdayLabels={false}
-                  />
-                </div>
-              </SpotlightCard>
-
-              {/* Tech Stack (4 cols) */}
-              <SpotlightCard className="col-span-12 md:col-span-4 p-5 flex flex-col justify-center overflow-hidden relative min-h-[160px]">
-                <h3 className={`${spaceGrotesk.className} text-lg font-bold text-zinc-400 mb-3`}>Stack</h3>
-
-                <div className="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-zinc-900 to-transparent z-10" />
-                <div className="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-zinc-900 to-transparent z-10" />
-
-                <div className="flex overflow-hidden">
-                  <div className="flex gap-2 animate-infinite-scroll whitespace-nowrap">
-                    {[...TECH_STACK, ...TECH_STACK].map((tech, i) => (
-                      <span key={i} className="flex items-center gap-1.5 text-zinc-300 font-mono text-xs bg-zinc-800/50 px-2.5 py-1 rounded-full border border-zinc-700/50">
-                        <Terminal size={10} className="text-emerald-500" /> {tech}
+                  {/* Quick Stats */}
+                  <div className="flex md:flex-col gap-4 md:gap-2 text-sm shrink-0">
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <MapPin size={14} className="text-emerald-500" />
+                      <span>India (UTC+5:30)</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-zinc-400">
+                      <span className="relative flex h-2 w-2">
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                       </span>
-                    ))}
+                      <span>Open to Remote</span>
+                    </div>
                   </div>
                 </div>
               </SpotlightCard>
+            </section>
 
-              {/* Row 2: Featured Project (8 cols) + Side Project (4 cols) */}
-
-              {/* Featured Project */}
-              {PROJECTS.filter(p => p.featured).map((project, i) => (
-                <SpotlightCard
-                  key={i}
-                  className="col-span-12 md:col-span-8 p-6 group relative overflow-hidden min-h-[280px] flex flex-col"
-                >
-                  <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${project.gradient} blur-[80px] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none`} />
-
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex justify-between items-start mb-4">
-                      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
-                        Featured
-                      </span>
-                      <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors p-1.5 hover:bg-zinc-800 rounded">
-                        <ArrowUpRight size={18} />
-                      </a>
-                    </div>
-
-                    <h3 className={`${spaceGrotesk.className} text-2xl md:text-3xl font-bold text-white mb-3`}>{project.title}</h3>
-                    <p className="text-zinc-400 leading-relaxed mb-6 max-w-xl">{project.description}</p>
-
-                    <div className="flex flex-wrap gap-2 mt-auto">
-                      {project.tech.map(t => (
-                        <span key={t} className="text-xs font-medium text-zinc-500 bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
-                          {t}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </SpotlightCard>
-              ))}
-
-              {/* Side Project (First non-featured) */}
-              {PROJECTS.filter(p => !p.featured).slice(0, 1).map((project, i) => (
-                <SpotlightCard
-                  key={i}
-                  className="col-span-12 md:col-span-4 p-5 group relative overflow-hidden min-h-[280px] flex flex-col"
-                >
-                  <div className={`absolute top-0 right-0 w-32 h-32 bg-gradient-to-br ${project.gradient} blur-[60px] rounded-full opacity-0 group-hover:opacity-20 transition-opacity pointer-events-none`} />
-
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="p-2 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-                        <Terminal size={18} className="text-zinc-400" />
+            {/* EXPERIENCE SECTION */}
+            <section className="mb-10">
+              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Experience</h2>
+              <SpotlightCard className="p-6">
+                <div className="space-y-6">
+                  {EXPERIENCE.map((job, i) => (
+                    <div key={i} className="relative">
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
+                        <h3 className="text-lg font-semibold text-zinc-100">{job.role}</h3>
+                        <span className="text-xs font-mono text-zinc-500">{job.date}</span>
                       </div>
-                      <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors">
-                        <ArrowUpRight size={16} />
-                      </a>
+                      <p className="text-emerald-400 text-sm font-medium mb-2">{job.company}</p>
+                      <ul className="text-zinc-400 text-sm leading-relaxed list-disc pl-4 space-y-1">
+                        {job.bullets.map((bullet, k) => (
+                          <li key={k}>{bullet}</li>
+                        ))}
+                      </ul>
                     </div>
+                  ))}
+                </div>
+              </SpotlightCard>
+            </section>
 
-                    <h3 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-2`}>{project.title}</h3>
-                    <p className="text-sm text-zinc-500 leading-relaxed mb-4 line-clamp-3">{project.description}</p>
+            {/* PROJECTS SECTION */}
+            <section className="mb-10">
+              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Projects</h2>
 
-                    <div className="flex flex-wrap gap-1.5 mt-auto">
-                      {project.tech.slice(0, 3).map(t => (
-                        <span key={t} className="text-[10px] text-zinc-500 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
-                          {t}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Featured Project - Full Width */}
+                {PROJECTS.filter(p => p.featured).map((project, i) => (
+                  <SpotlightCard
+                    key={i}
+                    className="md:col-span-2 p-6 group relative overflow-hidden"
+                  >
+                    <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${project.gradient} blur-[80px] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none`} />
+
+                    <div className="relative z-10">
+                      <div className="flex justify-between items-start mb-3">
+                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                          Featured
                         </span>
-                      ))}
-                    </div>
-                  </div>
-                </SpotlightCard>
-              ))}
-
-              {/* Row 3: More Projects (4 cols each) */}
-              {PROJECTS.filter(p => !p.featured).slice(1).map((project, i) => (
-                <SpotlightCard
-                  key={i}
-                  className="col-span-12 sm:col-span-6 md:col-span-4 p-5 group relative overflow-hidden min-h-[200px] flex flex-col"
-                >
-                  <div className="relative z-10 flex flex-col h-full">
-                    <div className="flex justify-between items-start mb-3">
-                      <div className="p-2 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
-                        <Terminal size={16} className="text-zinc-400" />
+                        <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors p-1.5 hover:bg-zinc-800 rounded">
+                          <ArrowUpRight size={18} />
+                        </a>
                       </div>
-                      <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors">
-                        <ArrowUpRight size={14} />
-                      </a>
+
+                      <h3 className={`${spaceGrotesk.className} text-2xl font-bold text-white mb-2`}>{project.title}</h3>
+                      <p className="text-zinc-400 leading-relaxed mb-4 text-sm">{project.description}</p>
+
+                      <div className="flex flex-wrap gap-2">
+                        {project.tech.map(t => (
+                          <span key={t} className="text-xs font-medium text-zinc-500 bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
+                  </SpotlightCard>
+                ))}
 
-                    <h3 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-2`}>{project.title}</h3>
-                    <p className="text-xs text-zinc-500 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
+                {/* Other Projects */}
+                {PROJECTS.filter(p => !p.featured).map((project, i) => (
+                  <SpotlightCard
+                    key={i}
+                    className="p-5 group relative overflow-hidden"
+                  >
+                    <div className="relative z-10 flex flex-col h-full">
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="p-2 bg-zinc-800/50 rounded-lg border border-zinc-700/50">
+                          <Terminal size={16} className="text-zinc-400" />
+                        </div>
+                        <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors">
+                          <ArrowUpRight size={16} />
+                        </a>
+                      </div>
 
-                    <div className="flex flex-wrap gap-1.5 mt-auto">
-                      {project.tech.slice(0, 3).map(t => (
-                        <span key={t} className="text-[10px] text-zinc-500 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
-                          {t}
-                        </span>
-                      ))}
+                      <h3 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-2`}>{project.title}</h3>
+                      <p className="text-xs text-zinc-500 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
+
+                      <div className="flex flex-wrap gap-1.5 mt-auto">
+                        {project.tech.slice(0, 3).map(t => (
+                          <span key={t} className="text-[10px] text-zinc-500 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </SpotlightCard>
-              ))}
+                  </SpotlightCard>
+                ))}
+              </div>
 
-              {/* Archive Section */}
-              <div className="col-span-12 mt-8">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className={`${spaceGrotesk.className} text-xl font-bold text-zinc-300`}>
-                    Other Work
-                  </h2>
+              {/* Other Work (Archive) */}
+              <div className="mt-6">
+                <div className="flex items-center justify-between mb-3">
+                  <h3 className="text-sm font-medium text-zinc-400">Other Work</h3>
                   <a
                     href="https://github.com/dprateek996?tab=repositories"
                     target="_blank"
@@ -280,7 +242,7 @@ export default function Portfolio() {
                   </a>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                   {EXTRA_PROJECTS.map((project, i) => (
                     <motion.a
                       key={i}
@@ -289,53 +251,86 @@ export default function Portfolio() {
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
-                      className="group p-3 bg-zinc-900/40 border border-zinc-800/50 rounded-lg hover:bg-zinc-800/60 hover:border-zinc-700 transition-all flex flex-col"
+                      className="group p-3 bg-zinc-900/40 border border-zinc-800/50 rounded-lg hover:bg-zinc-800/60 hover:border-zinc-700 transition-all"
                     >
-                      <h3 className="font-medium text-sm text-zinc-300 group-hover:text-emerald-400 transition-colors mb-1 truncate">
+                      <h4 className="font-medium text-sm text-zinc-300 group-hover:text-emerald-400 transition-colors truncate">
                         {project.title}
-                      </h3>
-                      <p className="text-[10px] text-zinc-600 line-clamp-1">{project.description}</p>
+                      </h4>
+                      <p className="text-[10px] text-zinc-600 line-clamp-1 mt-1">{project.description}</p>
                     </motion.a>
                   ))}
                 </div>
               </div>
+            </section>
 
-              {/* Experience Timeline */}
-              <SpotlightCard className="col-span-12 p-6 md:p-8 mt-4">
-                <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-6`}>
-                  Experience
-                </h2>
+            {/* TECH STACK SECTION */}
+            <section className="mb-10">
+              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Stack</h2>
+              <SpotlightCard className="py-8 px-4 overflow-hidden relative">
+                {/* Fade edges */}
+                <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-zinc-900 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-zinc-900 to-transparent z-10 pointer-events-none" />
 
-                <div className="relative pl-4">
-                  <div className="absolute top-2 bottom-0 left-[19px] w-px bg-gradient-to-b from-zinc-700 via-zinc-800 to-transparent" />
-
-                  <div className="space-y-8">
-                    {EXPERIENCE.map((job, i) => (
-                      <div key={i} className="relative group">
-                        <div className="absolute -left-[29px] top-1.5 h-2.5 w-2.5 rounded-full border-2 border-zinc-950 bg-zinc-600 group-hover:bg-emerald-500 transition-colors" />
-
-                        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1">
-                          <h3 className="text-lg font-semibold text-zinc-100">{job.role}</h3>
-                          <span className="text-xs font-mono text-zinc-500">{job.date}</span>
-                        </div>
-
-                        <p className="text-emerald-400 text-sm font-medium mb-2">{job.company}</p>
-
-                        <ul className="text-zinc-400 text-sm leading-relaxed list-disc pl-4 space-y-1">
-                          {job.bullets.map((bullet, k) => (
-                            <li key={k}>{bullet}</li>
-                          ))}
-                        </ul>
+                {/* Infinite Scroll Container */}
+                <div className="flex w-max animate-infinite-scroll">
+                  {/* First set */}
+                  <div className="flex items-center gap-12 pr-12">
+                    {TECH_STACK.map((tech, i) => (
+                      <div key={`a-${i}`} className="flex flex-col items-center gap-3 group">
+                        <img
+                          src={tech.icon}
+                          alt={tech.name}
+                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
+                        />
+                        <span className="text-xs text-zinc-500 font-medium group-hover:text-zinc-300 transition-colors">{tech.name}</span>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Duplicate set for seamless loop */}
+                  <div className="flex items-center gap-12 pr-12">
+                    {TECH_STACK.map((tech, i) => (
+                      <div key={`b-${i}`} className="flex flex-col items-center gap-3 group">
+                        <img
+                          src={tech.icon}
+                          alt={tech.name}
+                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
+                        />
+                        <span className="text-xs text-zinc-500 font-medium group-hover:text-zinc-300 transition-colors">{tech.name}</span>
                       </div>
                     ))}
                   </div>
                 </div>
               </SpotlightCard>
+            </section>
 
+            {/* GITHUB CONTRIBUTION SECTION */}
+            <section className="mb-10">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white`}>GitHub Activity</h2>
+                <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-zinc-600 hover:text-zinc-400 flex items-center gap-1 transition-colors">
+                  @dprateek996 <ArrowUpRight size={12} />
+                </a>
+              </div>
+              <SpotlightCard className="p-6">
+                <div className="w-full overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+                  <ActivityCalendar
+                    data={calendarData}
+                    loading={calendarData.length === 0}
+                    blockSize={10}
+                    blockMargin={4}
+                    theme={{
+                      light: ['#18181b', '#27272a', '#3f3f46', '#52525b', '#71717a'],
+                      dark: ['#27272a', '#064e3b', '#065f46', '#059669', '#10b981'],
+                    }}
+                    colorScheme="dark"
+                    showWeekdayLabels={false}
+                  />
+                </div>
+              </SpotlightCard>
             </section>
 
             {/* Footer */}
-            <footer className="py-8 text-center text-zinc-600 text-xs mt-8">
+            <footer className="py-8 text-center text-zinc-600 text-xs">
               <p>© 2025 {PERSONAL_INFO.name}. Engineering the future.</p>
             </footer>
 

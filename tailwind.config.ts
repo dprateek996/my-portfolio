@@ -22,7 +22,7 @@ const config: Config = {
             keyframes: {
                 "infinite-scroll": {
                     from: { transform: "translateX(0)" },
-                    to: { transform: "translateX(-100%)" },
+                    to: { transform: "translateX(-50%)" },
                 },
                 spotlight: {
                     "0%": { opacity: "0", transform: "translate(-72%, -62%) scale(0.5)" },
