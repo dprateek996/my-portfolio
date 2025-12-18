@@ -8,15 +8,6 @@
 
 body {
   @apply bg-black text-white;
-  cursor: none !important;
-}
-
-/* Ensure interactive elements also hide the cursor */
-a,
-button,
-[role='button'],
-.hover-link {
-  cursor: none !important;
 }
 
 /* Smooth Scrolling */

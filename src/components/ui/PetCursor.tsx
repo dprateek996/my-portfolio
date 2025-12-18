@@ -1,90 +1,182 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, useSpring, useMotionValue, useVelocity, useTransform } from "framer-motion";
+import React, { useEffect, useRef } from "react";
 
 export default function PetCursor() {
-    const mouseX = useMotionValue(0);
-    const mouseY = useMotionValue(0);
-
-    // 1. "Chase" Physics: Lower stiffness & higher damping creates a "catch-up" delay
-    const springConfig = { stiffness: 120, damping: 20 };
-    const x = useSpring(mouseX, springConfig);
-    const y = useSpring(mouseY, springConfig);
-
-    // 2. Movement Tracking: Is the pet actually moving right now?
-    const velX = useVelocity(x);
-    const [isMoving, setIsMoving] = useState(false);
-    const [flip, setFlip] = useState(1);
-
-    // 3. Dynamic Rotation: Leans forward while running
-    const rotate = useTransform(velX, [-500, 500], [-15, 15]);
+    const nekoRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        const handleMouseMove = (e: MouseEvent) => {
-            // Offset so the ferret "chases" a point slightly behind/beside the cursor
-            mouseX.set(e.clientX - 40);
-            mouseY.set(e.clientY + 20);
+        const nekoEl = nekoRef.current;
+        if (!nekoEl) return;
+
+        // State
+        let nekoPosX = 32;
+        let nekoPosY = 32;
+        let mousePosX = 0;
+        let mousePosY = 0;
+        let frameCount = 0;
+        let idleTime = 0;
+        let idleAnimation: string | null = null;
+        let idleAnimationFrame = 0;
+        let forceSleep = false;
+
+        const nekoSpeed = 5; // Slower speed
+        const spriteSets: Record<string, number[][]> = {
+            idle: [[-3, -3]],
+            alert: [[-7, -3]],
+            scratchSelf: [[-5, 0], [-6, 0], [-7, 0]],
+            scratchWallN: [[0, 0], [0, -1]],
+            scratchWallS: [[-7, -1], [-6, -2]],
+            scratchWallE: [[-2, -2], [-2, -3]],
+            scratchWallW: [[-4, 0], [-4, -1]],
+            tired: [[-3, -2]],
+            sleeping: [[-2, 0], [-2, -1]],
+            N: [[-1, -2], [-1, -3]],
+            NE: [[0, -2], [0, -3]],
+            E: [[-3, 0], [-3, -1]],
+            SE: [[-5, -1], [-5, -2]],
+            S: [[-6, -3], [-7, -2]],
+            SW: [[-5, -3], [-6, -1]],
+            W: [[-4, -2], [-4, -3]],
+            NW: [[-1, 0], [-1, -1]],
         };
 
-        // Update moving state and direction based on velocity
-        const unsubscribe = velX.on("change", (v) => {
-            if (Math.abs(v) > 5) {
-                setIsMoving(true);
-                setFlip(v > 0 ? 1 : -1); // Face the direction of movement
-            } else {
-                setIsMoving(false);
+        const setSprite = (name: string, frame: number) => {
+            const sprite = spriteSets[name]?.[frame % spriteSets[name].length];
+            if (sprite) {
+                nekoEl.style.backgroundPosition = `${sprite[0] * 32}px ${sprite[1] * 32}px`;
             }
-        });
-
-        window.addEventListener("mousemove", handleMouseMove);
-        return () => {
-            window.removeEventListener("mousemove", handleMouseMove);
-            unsubscribe();
         };
-    }, [mouseX, mouseY, velX]);
+
+        const resetIdleAnimation = () => {
+            idleAnimation = null;
+            idleAnimationFrame = 0;
+        };
+
+        const idle = () => {
+            idleTime += 1;
+
+            // Force sleep on click
+            if (forceSleep) {
+                setSprite("sleeping", Math.floor(idleAnimationFrame / 4));
+                idleAnimationFrame += 1;
+                if (idleAnimationFrame > 64) {
+                    forceSleep = false;
+                    resetIdleAnimation();
+                }
+                return;
+            }
+
+            // After being idle for a while, do something
+            if (idleTime > 10 && Math.floor(Math.random() * 200) === 0 && idleAnimation === null) {
+                const availableIdleAnimations = ["sleeping", "scratchSelf"];
+                idleAnimation = availableIdleAnimations[Math.floor(Math.random() * availableIdleAnimations.length)];
+            }
+
+            switch (idleAnimation) {
+                case "sleeping":
+                    if (idleAnimationFrame < 8) {
+                        setSprite("tired", 0);
+                        break;
+                    }
+                    setSprite("sleeping", Math.floor(idleAnimationFrame / 4));
+                    if (idleAnimationFrame > 192) {
+                        resetIdleAnimation();
+                    }
+                    break;
+                case "scratchSelf":
+                    setSprite("scratchSelf", idleAnimationFrame);
+                    if (idleAnimationFrame > 9) {
+                        resetIdleAnimation();
+                    }
+                    break;
+                default:
+                    setSprite("idle", 0);
+                    return;
+            }
+            idleAnimationFrame += 1;
+        };
+
+        const frame = () => {
+            frameCount += 1;
+
+            const diffX = nekoPosX - mousePosX;
+            const diffY = nekoPosY - mousePosY;
+            const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
+
+            if (distance < nekoSpeed || distance < 48) {
+                idle();
+                return;
+            }
+
+            idleAnimation = null;
+            idleAnimationFrame = 0;
+
+            if (idleTime > 1) {
+                setSprite("alert", 0);
+                idleTime = Math.min(idleTime, 7);
+                idleTime -= 1;
+                return;
+            }
+
+            let direction = "";
+            direction += diffY / distance > 0.5 ? "N" : "";
+            direction += diffY / distance < -0.5 ? "S" : "";
+            direction += diffX / distance > 0.5 ? "W" : "";
+            direction += diffX / distance < -0.5 ? "E" : "";
+
+            // Move toward cursor
+            nekoPosX -= (diffX / distance) * nekoSpeed;
+            nekoPosY -= (diffY / distance) * nekoSpeed;
+
+            nekoEl.style.left = `${nekoPosX - 16}px`;
+            nekoEl.style.top = `${nekoPosY - 16}px`;
+
+            setSprite(direction || "idle", frameCount);
+        };
+
+        const onMouseMove = (event: MouseEvent) => {
+            mousePosX = event.clientX;
+            mousePosY = event.clientY;
+        };
+
+        // Click on cat to make it sleep
+        const onNekoClick = () => {
+            forceSleep = true;
+            idleAnimationFrame = 0;
+        };
+
+        nekoEl.style.pointerEvents = "auto";
+        nekoEl.style.cursor = "pointer";
+        nekoEl.addEventListener("click", onNekoClick);
+        window.addEventListener("mousemove", onMouseMove);
+
+        // Run at slower rate for more natural movement
+        const interval = setInterval(frame, 100);
+
+        // Initial position
+        nekoEl.style.left = `${nekoPosX - 16}px`;
+        nekoEl.style.top = `${nekoPosY - 16}px`;
+
+        return () => {
+            nekoEl.removeEventListener("click", onNekoClick);
+            window.removeEventListener("mousemove", onMouseMove);
+            clearInterval(interval);
+        };
+    }, []);
 
     return (
-        <motion.div
+        <div
+            ref={nekoRef}
+            aria-hidden="true"
             style={{
+                width: "32px",
+                height: "32px",
                 position: "fixed",
-                left: 0,
-                top: 0,
-                x,
-                y,
-                rotate,
-                scaleX: flip,
-                pointerEvents: "none",
+                backgroundImage: "url('https://raw.githubusercontent.com/adryd325/oneko.js/main/oneko.gif')",
+                imageRendering: "pixelated",
                 zIndex: 9999,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center"
             }}
-        >
-            {/* The "Running/Waddle" Animation */}
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <motion.img
-                src="/ferret.png" // MAKE SURE THIS IS TRANSPARENT
-                alt="Pet"
-                style={{ width: "90px", height: "auto" }}
-                animate={isMoving ? {
-                    y: [0, -8, 0], // The "hop" while running
-                    rotate: [0, 5, -5, 0], // The "waddle"
-                } : {
-                    y: 0,
-                    rotate: 0,
-                    scale: [1, 1.03, 1] // Gentle breathing while idle
-                }}
-                transition={isMoving ? {
-                    duration: 0.3,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                } : {
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                }}
-            />
-        </motion.div>
+        />
     );
 }
