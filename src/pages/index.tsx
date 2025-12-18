@@ -12,6 +12,7 @@ import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { FloatingDock } from "@/components/ui/FloatingDock";
 import { HologramCard } from "@/components/ui/HologramCard";
 import { Preloader } from "@/components/Preloader";
+import { RenxaCursor } from "@/components/ui/RenxaCursor";
 
 // Lazy load the heavy chart so the page loads instantly
 const ActivityCalendar = dynamic(() => import('react-activity-calendar').then(mod => mod.ActivityCalendar), {
@@ -56,6 +57,7 @@ export default function Portfolio() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
+          <RenxaCursor />
           {/* Top Navigation */}
           <Header />
 
