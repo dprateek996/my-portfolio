@@ -4,6 +4,16 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
+
+  /* Accent Color - Change the hue (0-360) to shift the entire color scheme */
+  /* 25 = Orange/Amber, 160 = Emerald, 220 = Blue, 280 = Purple */
+  --accent-hue: 25;
+  --accent-saturation: 95%;
+
+  /* Generated accent shades */
+  --accent-300: hsl(var(--accent-hue), var(--accent-saturation), 65%);
+  --accent-400: hsl(var(--accent-hue), var(--accent-saturation), 55%);
+  --accent-500: hsl(var(--accent-hue), var(--accent-saturation), 50%);
 }
 
 body {

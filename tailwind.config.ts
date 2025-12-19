@@ -13,6 +13,12 @@ const config: Config = {
                     850: "#1f1f22",
                     900: "#18181b",
                     950: "#09090b",
+                },
+                // Accent colors using CSS variables (defined in globals.css)
+                accent: {
+                    300: "var(--accent-300)",
+                    400: "var(--accent-400)",
+                    500: "var(--accent-500)",
                 }
             },
             animation: {

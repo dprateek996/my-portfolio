@@ -63,7 +63,7 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
 
                 {/* Background "Ghost" Number for depth (Optional Renxa style) */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-10 pointer-events-none select-none blur-sm">
-                    <span className="text-[20vw] font-bold tracking-tighter text-emerald-500">
+                    <span className="text-[20vw] font-bold tracking-tighter text-accent-500">
                         {count}
                     </span>
                 </div>
@@ -76,7 +76,7 @@ export const Preloader = ({ onComplete }: { onComplete: () => void }) => {
                     className="h-[1px] bg-zinc-800 w-64 relative overflow-hidden"
                 >
                     <motion.div
-                        className="absolute inset-0 bg-emerald-500"
+                        className="absolute inset-0 bg-accent-500"
                         initial={{ x: "-100%" }}
                         animate={{ x: "0%" }}
                         transition={{ duration: 2.5, ease: "easeInOut" }}

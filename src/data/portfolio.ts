@@ -7,7 +7,6 @@ export const PERSONAL_INFO = {
     name: "Prateek Dwivedi",
     title: "Full Stack Engineer",
     headline: "I learn. I build. I break. I fix. I ship.",
-    subHeadline: "Turning vague ideas into reliable software.",
     email: "dprateek996@gmail.com",
     socials: [
         { name: "GitHub", href: "https://github.com/dprateek996", icon: Github },
@@ -43,7 +42,7 @@ export const PROJECTS = [
         description: "Browser extension to export and summarize chat logs into PDF/JSON using local AI processing models.",
         tech: ["JavaScript", "Manifest V3", "GenAI", "Chrome API"],
         link: "https://github.com/dprateek996/chat_exporter",
-        gradient: "from-emerald-500/20 to-green-500/20",
+        gradient: "from-accent-500/20 to-green-500/20",
         Diagram: ChatExporterDiagram,
     },
 ];

@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowUpRight, Terminal, MapPin } from "lucide-react";
 import dynamic from 'next/dynamic';
 
-import { Header } from "@/components/Header";
+
 import { Seo } from "@/components/Seo";
 import { PERSONAL_INFO, PROJECTS, EXPERIENCE, TECH_STACK, EXTRA_PROJECTS } from "@/data/portfolio";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
@@ -56,7 +56,6 @@ export default function Portfolio() {
           transition={{ duration: 0.5 }}
         >
           <PetCursor />
-          <Header />
           <FloatingDock />
 
           {/* CENTERED BENTO CONTAINER */}
@@ -72,24 +71,20 @@ export default function Portfolio() {
               {/* Status Badge */}
               <div className="inline-flex items-center gap-2 mb-6 bg-zinc-900/60 px-4 py-2 rounded-full border border-zinc-800 backdrop-blur-md">
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
                 </span>
-                <span className="text-xs font-medium text-emerald-400">Available for work</span>
+                <span className="text-xs font-medium text-accent-400">Available for work</span>
               </div>
 
               {/* Name */}
-              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500`}>
+              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-3 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-zinc-500`}>
                 {PERSONAL_INFO.name}
               </h1>
 
               {/* Tagline */}
-              <p className="text-lg md:text-xl text-zinc-400 max-w-xl mx-auto leading-relaxed mb-2">
+              <p className="text-lg md:text-xl text-zinc-400 max-w-lg mx-auto leading-snug">
                 {PERSONAL_INFO.headline}
-              </p>
-
-              <p className="text-sm text-emerald-500/80 font-mono">
-                {PERSONAL_INFO.subHeadline}
               </p>
 
               {/* Social Links */}
@@ -100,7 +95,7 @@ export default function Portfolio() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2.5 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-lg transition-all border border-transparent hover:border-zinc-700"
+                    className="p-2.5 text-zinc-500 hover:text-white hover:bg-zinc-800 rounded-lg transition-all border border-zinc-800 hover:border-zinc-700"
                   >
                     <social.icon size={20} />
                   </a>
@@ -114,22 +109,22 @@ export default function Portfolio() {
                 <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-start">
                   {/* About Text */}
                   <div className="flex-1">
-                    <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-3`}>About</h2>
-                    <p className="text-zinc-400 leading-relaxed text-sm md:text-base">
-                      I'm a Full Stack Engineer based in <span className="text-emerald-400 font-medium">India</span> who loves building products that solve real problems.
-                      I work across the entire development lifecycle — from UI/UX to deployment — with a focus on shipping fast and learning faster.
+                    <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-2`}>About</h2>
+                    <p className="text-zinc-400 leading-relaxed text-sm">
+                      I'm a <span className="text-white font-medium">Full Stack Engineer</span> based in <span className="text-accent-400 font-medium">India</span>, building products that solve real problems.
+                      I work across the entire stack—<span className="text-zinc-300">UI/UX to deployment</span>—shipping fast, learning faster.
                     </p>
                   </div>
                   {/* Quick Stats */}
                   <div className="flex md:flex-col gap-4 md:gap-2 text-sm shrink-0">
                     <div className="flex items-center gap-2 text-zinc-400">
-                      <MapPin size={14} className="text-emerald-500" />
+                      <MapPin size={14} className="text-accent-500" />
                       <span>India (UTC+5:30)</span>
                     </div>
                     <div className="flex items-center gap-2 text-zinc-400">
                       <span className="relative flex h-2 w-2">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
+                        <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
                       </span>
                       <span>Open to Remote</span>
                     </div>
@@ -139,17 +134,17 @@ export default function Portfolio() {
             </section>
 
             {/* EXPERIENCE SECTION */}
-            <section className="mb-10">
-              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Experience</h2>
-              <SpotlightCard className="p-6">
-                <div className="space-y-6">
+            <section className="mb-8">
+              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-3`}>Experience</h2>
+              <SpotlightCard className="p-5">
+                <div className="space-y-5">
                   {EXPERIENCE.map((job, i) => (
                     <div key={i} className="relative">
-                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-1">
-                        <h3 className="text-lg font-semibold text-zinc-100">{job.role}</h3>
-                        <span className="text-xs font-mono text-zinc-500">{job.date}</span>
+                      <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 mb-0.5">
+                        <h3 className="text-base font-semibold text-zinc-100">{job.role}</h3>
+                        <span className="text-[11px] font-mono text-zinc-500">{job.date}</span>
                       </div>
-                      <p className="text-emerald-400 text-sm font-medium mb-2">{job.company}</p>
+                      <p className="text-accent-400 text-sm font-medium mb-1.5">{job.company}</p>
                       <ul className="text-zinc-400 text-sm leading-relaxed list-disc pl-4 space-y-1">
                         {job.bullets.map((bullet, k) => (
                           <li key={k}>{bullet}</li>
@@ -162,8 +157,8 @@ export default function Portfolio() {
             </section>
 
             {/* PROJECTS SECTION */}
-            <section className="mb-10">
-              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Projects</h2>
+            <section className="mb-8">
+              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-3`}>Projects</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Featured Project - Full Width */}
@@ -176,7 +171,7 @@ export default function Portfolio() {
 
                     <div className="relative z-10">
                       <div className="flex justify-between items-start mb-3">
-                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-500 border border-emerald-500/20">
+                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-accent-500/10 text-accent-500 border border-accent-500/20">
                           Featured
                         </span>
                         <a href={project.link} target="_blank" className="text-zinc-500 hover:text-white transition-colors p-1.5 hover:bg-zinc-800 rounded">
@@ -184,12 +179,12 @@ export default function Portfolio() {
                         </a>
                       </div>
 
-                      <h3 className={`${spaceGrotesk.className} text-2xl font-bold text-white mb-2`}>{project.title}</h3>
-                      <p className="text-zinc-400 leading-relaxed mb-4 text-sm">{project.description}</p>
+                      <h3 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-1.5`}>{project.title}</h3>
+                      <p className="text-zinc-400 leading-snug mb-3 text-sm">{project.description}</p>
 
                       <div className="flex flex-wrap gap-2">
                         {project.tech.map(t => (
-                          <span key={t} className="text-xs font-medium text-zinc-500 bg-zinc-900 border border-zinc-800 px-2 py-1 rounded">
+                          <span key={t} className="text-xs font-medium text-zinc-400 bg-transparent border border-dashed border-zinc-600 px-2.5 py-1 rounded-md hover:border-accent-400 hover:text-accent-400 transition-colors">
                             {t}
                           </span>
                         ))}
@@ -214,12 +209,12 @@ export default function Portfolio() {
                         </a>
                       </div>
 
-                      <h3 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-2`}>{project.title}</h3>
-                      <p className="text-xs text-zinc-500 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
+                      <h3 className={`${spaceGrotesk.className} text-base font-bold text-white mb-1`}>{project.title}</h3>
+                      <p className="text-[11px] text-zinc-500 leading-snug mb-2 line-clamp-2">{project.description}</p>
 
                       <div className="flex flex-wrap gap-1.5 mt-auto">
                         {project.tech.slice(0, 3).map(t => (
-                          <span key={t} className="text-[10px] text-zinc-500 bg-zinc-900 border border-zinc-800 px-1.5 py-0.5 rounded">
+                          <span key={t} className="text-[10px] text-zinc-400 bg-transparent border border-dashed border-zinc-600 px-2 py-0.5 rounded-md hover:border-accent-400 hover:text-accent-400 transition-colors">
                             {t}
                           </span>
                         ))}
@@ -253,7 +248,7 @@ export default function Portfolio() {
                       transition={{ delay: i * 0.05 }}
                       className="group p-3 bg-zinc-900/40 border border-zinc-800/50 rounded-lg hover:bg-zinc-800/60 hover:border-zinc-700 transition-all"
                     >
-                      <h4 className="font-medium text-sm text-zinc-300 group-hover:text-emerald-400 transition-colors truncate">
+                      <h4 className="font-medium text-sm text-zinc-300 group-hover:text-accent-400 transition-colors truncate">
                         {project.title}
                       </h4>
                       <p className="text-[10px] text-zinc-600 line-clamp-1 mt-1">{project.description}</p>
@@ -329,9 +324,19 @@ export default function Portfolio() {
               </SpotlightCard>
             </section>
 
+            {/* GET IN TOUCH */}
+            <section className="text-center py-6">
+              <a
+                href={`mailto:${PERSONAL_INFO.email}`}
+                className="inline-flex items-center gap-2 text-zinc-400 hover:text-white text-sm font-medium transition-colors"
+              >
+                Get in Touch <ArrowUpRight size={14} />
+              </a>
+            </section>
+
             {/* Footer */}
-            <footer className="py-8 text-center text-zinc-600 text-xs">
-              <p>© 2025 {PERSONAL_INFO.name}. Engineering the future.</p>
+            <footer className="py-4 text-center text-zinc-700 text-[10px] border-t border-zinc-900">
+              <p>© 2025 {PERSONAL_INFO.name}</p>
             </footer>
 
           </div>
