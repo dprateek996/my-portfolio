@@ -69,7 +69,7 @@ export const CurrentlyLearning = () => {
                 <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider group-hover:text-zinc-500 transition-colors">
                     Learning
                 </span>
-                <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors truncate max-w-[150px]">
+                <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors truncate max-w-[200px]">
                     {data.title}
                 </span>
             </div>

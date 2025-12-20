@@ -31,12 +31,23 @@ export default function Portfolio() {
   const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
-    const data = Array(365).fill(0).map((_, i) => ({
-      date: new Date(Date.now() - (364 - i) * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
-      count: Math.random() > 0.6 ? Math.ceil(Math.random() * 5) : 0,
-      level: 0
-    }));
-    setCalendarData(data);
+    async function fetchCalendar() {
+      try {
+        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/dprateek996?y=${new Date().getFullYear()}`);
+        const json = await response.json();
+
+        if (json.contributions) {
+          setCalendarData(json.contributions);
+        }
+      } catch (e) {
+        console.error("Failed to fetch GitHub calendar", e);
+        // data will remain empty (shim will show)
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    fetchCalendar();
   }, []);
 
   return (
@@ -126,7 +137,7 @@ export default function Portfolio() {
                   <div className="h-px bg-zinc-800/20 w-full" />
 
                   {/* Bottom Area: Status Bar */}
-                  <div className="grid grid-cols-2 gap-y-4 md:flex md:flex-wrap md:items-center md:gap-x-8 md:gap-y-3">
+                  <div className="grid grid-cols-2 gap-y-4 md:flex md:flex-nowrap md:items-center md:gap-x-8 md:gap-y-3">
 
                     {/* Location */}
                     <div className="flex flex-col md:flex-row md:items-center gap-1 md:gap-2 shrink-0">
@@ -293,7 +304,7 @@ export default function Portfolio() {
             {/* TECH STACK SECTION */}
             <section className="mb-10">
               <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Stack</h2>
-              <SpotlightCard className="py-8 px-4 overflow-hidden relative">
+              <SpotlightCard className="py-8 px-8 overflow-hidden relative">
                 {/* Fade edges */}
                 <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-neutral-900 to-transparent z-10 pointer-events-none" />
                 <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-neutral-900 to-transparent z-10 pointer-events-none" />
@@ -332,25 +343,27 @@ export default function Portfolio() {
 
             {/* GITHUB CONTRIBUTION SECTION */}
             <section className="mb-10">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white`}>GitHub Activity</h2>
-                <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-600 hover:text-neutral-400 flex items-center gap-1 transition-colors">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-white`}>GitHub Activity</h2>
+                <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-400 hover:text-white flex items-center gap-1 transition-colors">
                   @dprateek996 <ArrowUpRight size={12} />
                 </a>
               </div>
               <SpotlightCard className="p-6">
-                <div className="w-full overflow-hidden opacity-80 hover:opacity-100 transition-opacity">
+                <div className="w-full overflow-x-auto custom-scrollbar opacity-90 hover:opacity-100 transition-opacity flex justify-end py-2 mb-8">
                   <ActivityCalendar
                     data={calendarData}
                     loading={calendarData.length === 0}
-                    blockSize={10}
-                    blockMargin={4}
+                    blockSize={12}
+                    blockRadius={2}
+                    blockMargin={3}
+                    fontSize={12}
                     theme={{
-                      light: ['#18181b', '#27272a', '#3f3f46', '#52525b', '#71717a'],
-                      dark: ['#27272a', '#064e3b', '#065f46', '#059669', '#10b981'],
+                      dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+                      light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
                     }}
                     colorScheme="dark"
-                    showWeekdayLabels={false}
+                    showWeekdayLabels={true}
                   />
                 </div>
 

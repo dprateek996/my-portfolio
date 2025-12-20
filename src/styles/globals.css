@@ -43,3 +43,25 @@ html {
 .animate-infinite-scroll:hover {
   animation-play-state: paused;
 }
+
+/* Custom Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+  /* Horizontal scrollbar height */
+  width: 6px;
+  /* Vertical scrollbar width */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+  /* Low opacity thumb */
+  border-radius: 9999px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}

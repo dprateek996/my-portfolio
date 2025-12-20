@@ -157,7 +157,7 @@ export const GitHubContributions = () => {
                                             </span>
                                         </div>
                                         <div className="flex items-center gap-2 pl-6">
-                                            <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${item.status === 'merged' ? 'bg-purple-500/10 text-purple-400' : 'bg-green-500/10 text-green-400'}`}>
+                                            <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${item.status === 'merged' ? 'bg-purple-500/10 text-purple-400' : 'bg-green-500/10 text-green-300'}`}>
                                                 {item.status === 'merged' ? 'Merged' : 'Open'}
                                             </span>
                                             <span className="text-[11px] text-neutral-500 truncate">
@@ -170,7 +170,7 @@ export const GitHubContributions = () => {
                                         <span className="text-[10px] text-neutral-600 font-mono hidden sm:block">
                                             {format(item.date, 'MMM d')}
                                         </span>
-                                        <div className="p-1.5 rounded-md bg-neutral-800/0 text-neutral-500 group-hover:text-white group-hover:bg-neutral-800 transition-all">
+                                        <div className="p-1.5 rounded-md bg-neutral-800/0 text-neutral-500 group-hover:text-white group-hover:bg-neutral-800 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                                             <ArrowUpRight size={14} />
                                         </div>
                                     </div>
