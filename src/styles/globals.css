@@ -1,23 +1,39 @@
 @import "tailwindcss";
 
+/* Tailwind v4: Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 0, 0, 0;
-  --background-end-rgb: 0, 0, 0;
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 255, 255, 255;
+  --background-end-rgb: 255, 255, 255;
 
   /* Accent Color - Change the hue (0-360) to shift the entire color scheme */
   /* 25 = Orange/Amber, 160 = Emerald, 220 = Blue, 280 = Purple */
   --accent-hue: 25;
   --accent-saturation: 95%;
 
-  /* Generated accent shades */
+  /* Generated accent shades - light mode */
+  --accent-300: hsl(var(--accent-hue), var(--accent-saturation), 35%);
+  --accent-400: hsl(var(--accent-hue), var(--accent-saturation), 45%);
+  --accent-500: hsl(var(--accent-hue), var(--accent-saturation), 50%);
+}
+
+/* Dark mode overrides */
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 0, 0, 0;
+  --background-end-rgb: 0, 0, 0;
+
+  /* Generated accent shades - dark mode */
   --accent-300: hsl(var(--accent-hue), var(--accent-saturation), 65%);
   --accent-400: hsl(var(--accent-hue), var(--accent-saturation), 55%);
   --accent-500: hsl(var(--accent-hue), var(--accent-saturation), 50%);
 }
 
 body {
-  @apply bg-black text-white;
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
 }
 
 /* Smooth Scrolling */
@@ -57,11 +73,18 @@ html {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.1);
-  /* Low opacity thumb */
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 9999px;
 }
 
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.3);
 }

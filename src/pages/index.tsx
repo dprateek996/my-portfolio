@@ -51,7 +51,7 @@ export default function Portfolio() {
   }, []);
 
   return (
-    <main className={`min-h-screen bg-black text-neutral-200 selection:bg-white/20 ${inter.className}`}>
+    <main className={`min-h-screen bg-white dark:bg-black text-black dark:text-neutral-200 selection:bg-black/20 dark:selection:bg-white/20 ${inter.className}`}>
 
       <Seo
         title={`${PERSONAL_INFO.name} | ${PERSONAL_INFO.title}`}
@@ -86,7 +86,7 @@ export default function Portfolio() {
               transition={{ duration: 0.5, delay: 0.2 }}
             >
               {/* Status Badge */}
-              <div className="inline-flex items-center gap-2 mb-6 bg-neutral-900/60 px-4 py-2 rounded-full border border-neutral-800 backdrop-blur-md">
+              <div className="inline-flex items-center gap-2 mb-6 bg-zinc-100/60 dark:bg-neutral-900/60 px-4 py-2 rounded-full border border-zinc-200 dark:border-neutral-800 backdrop-blur-md">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
@@ -95,12 +95,12 @@ export default function Portfolio() {
               </div>
 
               {/* Name */}
-              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-3 bg-clip-text text-transparent bg-gradient-to-b from-white via-white to-neutral-500`}>
+              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-3 bg-clip-text text-transparent bg-gradient-to-b from-black via-black to-neutral-500 dark:from-white dark:via-white dark:to-neutral-500`}>
                 {PERSONAL_INFO.name}
               </h1>
 
               {/* Tagline */}
-              <p className="text-lg md:text-xl text-neutral-400 max-w-lg mx-auto leading-snug">
+              <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto leading-snug">
                 {PERSONAL_INFO.headline}
               </p>
 
@@ -112,7 +112,7 @@ export default function Portfolio() {
                     href={social.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="p-2.5 text-neutral-500 hover:text-white hover:bg-neutral-800 rounded-lg transition-all border border-neutral-800 hover:border-neutral-700"
+                    className="p-2.5 text-neutral-500 dark:text-neutral-500 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-neutral-800 rounded-lg transition-all border border-zinc-200 dark:border-neutral-800 hover:border-zinc-300 dark:hover:border-neutral-700"
                   >
                     <social.icon size={20} />
                   </a>
@@ -126,10 +126,10 @@ export default function Portfolio() {
                 <div className="flex flex-col gap-6">
                   {/* Top Area: Bio */}
                   <div>
-                    <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-2`}>About</h2>
-                    <p className="text-neutral-400 leading-relaxed text-sm max-w-3xl">
-                      I'm a <span className="text-white font-medium">Full Stack Engineer</span> based in <span className="text-accent-400 font-medium">India</span>, building products that solve real problems.
-                      I work across the entire stack—<span className="text-neutral-300">UI/UX to deployment</span>—shipping fast, learning faster.
+                    <h2 className={`${spaceGrotesk.className} text-lg font-bold text-black dark:text-white mb-2`}>About</h2>
+                    <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm max-w-3xl">
+                      I'm a <span className="text-black dark:text-white font-medium">Full Stack Engineer</span> based in <span className="text-accent-400 font-medium">India</span>, building products that solve real problems.
+                      I work across the entire stack—<span className="text-neutral-700 dark:text-neutral-300">UI/UX to deployment</span>—shipping fast, learning faster.
                     </p>
                   </div>
 
@@ -175,17 +175,17 @@ export default function Portfolio() {
 
             {/* EXPERIENCE SECTION */}
             <section className="mb-8">
-              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-3`}>Experience</h2>
+              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-black dark:text-white mb-3`}>Experience</h2>
               <SpotlightCard className="p-5">
                 <div className="space-y-5">
                   {EXPERIENCE.map((job, i) => (
                     <div key={i} className="relative">
                       <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-0.5 mb-0.5">
-                        <h3 className="text-base font-semibold text-neutral-100">{job.role}</h3>
+                        <h3 className="text-base font-semibold text-neutral-900 dark:text-neutral-100">{job.role}</h3>
                         <span className="text-[11px] font-mono text-neutral-500">{job.date}</span>
                       </div>
                       <p className="text-accent-400 text-sm font-medium mb-1.5">{job.company}</p>
-                      <ul className="text-neutral-400 text-sm leading-relaxed list-disc pl-4 space-y-1">
+                      <ul className="text-neutral-600 dark:text-neutral-400 text-sm leading-relaxed list-disc pl-4 space-y-1">
                         {job.bullets.map((bullet, k) => (
                           <li key={k}>{bullet}</li>
                         ))}
@@ -198,7 +198,7 @@ export default function Portfolio() {
 
             {/* PROJECTS SECTION */}
             <section className="mb-8">
-              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-white mb-3`}>Projects</h2>
+              <h2 className={`${spaceGrotesk.className} text-lg font-bold text-black dark:text-white mb-3`}>Projects</h2>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {/* Featured Project - Full Width */}
@@ -214,17 +214,17 @@ export default function Portfolio() {
                         <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-accent-500/10 text-accent-500 border border-accent-500/20">
                           Featured
                         </span>
-                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-white transition-colors p-1.5 hover:bg-neutral-800 rounded">
+                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors p-1.5 hover:bg-zinc-100 dark:hover:bg-neutral-800 rounded">
                           <ArrowUpRight size={18} />
                         </a>
                       </div>
 
-                      <h3 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-1.5`}>{project.title}</h3>
-                      <p className="text-neutral-400 leading-snug mb-3 text-sm">{project.description}</p>
+                      <h3 className={`${spaceGrotesk.className} text-xl font-bold text-black dark:text-white mb-1.5`}>{project.title}</h3>
+                      <p className="text-neutral-600 dark:text-neutral-400 leading-snug mb-3 text-sm">{project.description}</p>
 
                       <div className="flex flex-wrap gap-2">
                         {project.tech.map(t => (
-                          <span key={t} className="text-xs font-medium text-neutral-400 bg-transparent border border-dashed border-neutral-600 px-2.5 py-1 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-400 hover:text-accent-400 hover:bg-neutral-900 cursor-default">
+                          <span key={t} className="text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-transparent border border-dashed border-zinc-300 dark:border-neutral-600 px-2.5 py-1 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-400 hover:text-accent-400 hover:bg-zinc-100 dark:hover:bg-neutral-900 cursor-default">
                             {t}
                           </span>
                         ))}
@@ -241,22 +241,22 @@ export default function Portfolio() {
                   >
                     <div className="relative z-10 flex flex-col h-full">
                       <div className="flex justify-between items-start mb-3">
-                        <div className="p-2 bg-neutral-800/50 rounded-lg border border-neutral-700/50">
+                        <div className="p-2 bg-zinc-100/50 dark:bg-neutral-800/50 rounded-lg border border-zinc-200/50 dark:border-neutral-700/50">
                           <Terminal size={16} className="text-neutral-400" />
                         </div>
-                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-white transition-colors">
+                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors">
                           <ArrowUpRight size={16} />
                         </a>
                       </div>
 
-                      <h3 className={`${spaceGrotesk.className} text-base font-bold text-white mb-1`}>{project.title}</h3>
+                      <h3 className={`${spaceGrotesk.className} text-base font-bold text-black dark:text-white mb-1`}>{project.title}</h3>
                       <p className="text-[11px] text-neutral-500 leading-snug mb-2 line-clamp-2">{project.description}</p>
 
                       <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
                         {project.tech.map((tech) => (
                           <span
                             key={tech}
-                            className="text-[10px] text-neutral-400 bg-transparent border border-dashed border-neutral-700 px-2 py-0.5 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-500 hover:text-accent-400 hover:bg-neutral-900 cursor-default"
+                            className="text-[10px] text-neutral-600 dark:text-neutral-400 bg-transparent border border-dashed border-zinc-300 dark:border-neutral-700 px-2 py-0.5 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-500 hover:text-accent-400 hover:bg-zinc-100 dark:hover:bg-neutral-900 cursor-default"
                           >
                             {tech}
                           </span>
@@ -270,11 +270,11 @@ export default function Portfolio() {
               {/* Other Work (Archive) */}
               <div className="mt-6">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-sm font-medium text-neutral-400">Other Work</h3>
+                  <h3 className="text-sm font-medium text-neutral-500 dark:text-neutral-400">Other Work</h3>
                   <a
                     href="https://github.com/dprateek996?tab=repositories"
                     target="_blank"
-                    className="text-xs font-mono text-neutral-600 hover:text-neutral-400 flex items-center gap-1 transition-colors"
+                    className="text-xs font-mono text-neutral-500 dark:text-neutral-600 hover:text-neutral-700 dark:hover:text-neutral-400 flex items-center gap-1 transition-colors"
                   >
                     View all <ArrowUpRight size={12} />
                   </a>
@@ -289,12 +289,12 @@ export default function Portfolio() {
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.05 }}
-                      className="group p-3 bg-neutral-900/40 border border-neutral-800/50 rounded-lg hover:bg-neutral-800/60 hover:border-neutral-700 transition-all"
+                      className="group p-3 bg-zinc-100/40 dark:bg-neutral-900/40 border border-zinc-200/50 dark:border-neutral-800/50 rounded-lg hover:bg-zinc-200/60 dark:hover:bg-neutral-800/60 hover:border-zinc-300 dark:hover:border-neutral-700 transition-all"
                     >
-                      <h4 className="font-medium text-sm text-neutral-300 group-hover:text-accent-400 transition-colors truncate">
+                      <h4 className="font-medium text-sm text-neutral-700 dark:text-neutral-300 group-hover:text-accent-400 transition-colors truncate">
                         {project.title}
                       </h4>
-                      <p className="text-[10px] text-neutral-600 line-clamp-1 mt-1">{project.description}</p>
+                      <p className="text-[10px] text-neutral-500 dark:text-neutral-600 line-clamp-1 mt-1">{project.description}</p>
                     </motion.a>
                   ))}
                 </div>
@@ -303,11 +303,11 @@ export default function Portfolio() {
 
             {/* TECH STACK SECTION */}
             <section className="mb-10">
-              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-white mb-4`}>Stack</h2>
+              <h2 className={`${spaceGrotesk.className} text-xl font-bold text-black dark:text-white mb-4`}>Stack</h2>
               <SpotlightCard className="py-8 px-8 overflow-hidden relative">
                 {/* Fade edges */}
-                <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-neutral-900 to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-neutral-900 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-zinc-50 dark:from-neutral-900 to-transparent z-10 pointer-events-none" />
+                <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-zinc-50 dark:from-neutral-900 to-transparent z-10 pointer-events-none" />
 
                 {/* Infinite Scroll Container */}
                 <div className="flex w-max animate-infinite-scroll">
@@ -320,7 +320,7 @@ export default function Portfolio() {
                           alt={tech.name}
                           className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
                         />
-                        <span className="text-xs text-neutral-500 font-medium group-hover:text-neutral-300 transition-colors">{tech.name}</span>
+                        <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>
                     ))}
                   </div>
@@ -333,7 +333,7 @@ export default function Portfolio() {
                           alt={tech.name}
                           className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
                         />
-                        <span className="text-xs text-neutral-500 font-medium group-hover:text-neutral-300 transition-colors">{tech.name}</span>
+                        <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>
                     ))}
                   </div>
@@ -344,8 +344,8 @@ export default function Portfolio() {
             {/* GITHUB CONTRIBUTION SECTION */}
             <section className="mb-10">
               <div className="flex items-center justify-between mb-6">
-                <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-white`}>GitHub Activity</h2>
-                <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-400 hover:text-white flex items-center gap-1 transition-colors">
+                <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-black dark:text-white`}>GitHub Activity</h2>
+                <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-1 transition-colors">
                   @dprateek996 <ArrowUpRight size={12} />
                 </a>
               </div>
@@ -376,14 +376,14 @@ export default function Portfolio() {
             <section className="text-center py-6">
               <a
                 href={`mailto:${PERSONAL_INFO.email}`}
-                className="inline-flex items-center gap-2 text-neutral-400 hover:text-white text-sm font-medium transition-colors"
+                className="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400 hover:text-black dark:hover:text-white text-sm font-medium transition-colors"
               >
                 Get in Touch <ArrowUpRight size={14} />
               </a>
             </section>
 
             {/* Footer */}
-            <footer className="py-4 text-center text-neutral-700 text-[10px] border-t border-neutral-900">
+            <footer className="py-4 text-center text-neutral-400 dark:text-neutral-700 text-[10px] border-t border-zinc-200 dark:border-neutral-900">
               <p>© 2025 {PERSONAL_INFO.name}</p>
             </footer>
 

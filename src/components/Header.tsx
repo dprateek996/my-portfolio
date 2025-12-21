@@ -11,7 +11,21 @@ export const Header = () => {
     const [isVisible, setIsVisible] = useState(true);
     const [lastScrollY, setLastScrollY] = useState(0);
     const [isScrolled, setIsScrolled] = useState(false);
-    const [isDark, setIsDark] = useState(true);
+    const [isDark, setIsDark] = useState(false); // Default to light mode
+
+    // Initialize theme from localStorage
+    useEffect(() => {
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const shouldBeDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+
+        setIsDark(shouldBeDark);
+        if (shouldBeDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    }, []);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -35,13 +49,21 @@ export const Header = () => {
     }, [lastScrollY]);
 
     const toggleTheme = () => {
-        setIsDark(!isDark);
-        // Note: Actual theme logic would go here (e.g., document.documentElement.classList.toggle('dark'))
+        const newIsDark = !isDark;
+        setIsDark(newIsDark);
+
+        if (newIsDark) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
     };
 
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "py-4 bg-black/50 backdrop-blur-md border-b border-white/5" : "py-6 bg-transparent border-b border-transparent"}`}
+            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "py-4 bg-black/50 backdrop-blur-md border-b border-white/5 dark:bg-black/50 dark:border-white/5" : "py-6 bg-transparent border-b border-transparent"}`}
             initial={{ y: 0, opacity: 1 }}
             animate={{
                 y: isVisible ? 0 : -100,
@@ -52,17 +74,17 @@ export const Header = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">
                 {/* Logo */}
                 <div className={`${spaceGrotesk.className} flex items-center gap-2`}>
-                    <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center relative overflow-hidden group">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-zinc-900 border border-zinc-800 dark:border-zinc-800 flex items-center justify-center relative overflow-hidden group">
                         <span className="text-lg font-bold text-white group-hover:scale-110 transition-transform">P</span>
                         <div className="absolute inset-0 bg-accent-500/20 blur-xl group-hover:bg-accent-500/30 transition-colors" />
                     </div>
-                    <span className="text-lg font-bold text-white tracking-tight">Prateek</span>
+                    <span className="text-lg font-bold text-black dark:text-white tracking-tight">Prateek</span>
                 </div>
 
                 {/* Theme Toggle */}
                 <button
                     onClick={toggleTheme}
-                    className="relative w-10 h-10 rounded-full bg-zinc-900/50 border border-zinc-800 flex items-center justify-center hover:bg-zinc-800 transition-colors group"
+                    className="relative w-10 h-10 rounded-full bg-zinc-100 dark:bg-zinc-900/50 border border-zinc-300 dark:border-zinc-800 flex items-center justify-center hover:bg-zinc-200 dark:hover:bg-zinc-800 transition-colors group"
                 >
                     <AnimatePresence mode="wait">
                         {isDark ? (

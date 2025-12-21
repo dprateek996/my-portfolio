@@ -101,7 +101,7 @@ export const GitHubContributions = () => {
     }, []);
 
     if (loading) return (
-        <div className="flex items-center gap-2 text-xs text-neutral-500 py-4">
+        <div className="flex items-center gap-2 text-xs text-neutral-500 dark:text-neutral-500 py-4">
             <Loader2 size={12} className="animate-spin" />
             <span>Fetching latest contributions...</span>
         </div>
@@ -120,11 +120,11 @@ export const GitHubContributions = () => {
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-75"></span>
                         <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
                     </span>
-                    <h3 className="text-sm font-medium text-neutral-300 group-hover:text-white transition-colors">
-                        Open Source Contributions <span className="text-neutral-500 text-xs ml-1">• {new Date().getFullYear()}</span>
+                    <h3 className="text-sm font-medium text-neutral-700 dark:text-neutral-300 group-hover:text-black dark:group-hover:text-white transition-colors">
+                        Open Source Contributions <span className="text-neutral-500 dark:text-neutral-500 text-xs ml-1">• {new Date().getFullYear()}</span>
                     </h3>
                 </div>
-                <div className={`text-neutral-500 group-hover:text-white transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
+                <div className={`text-neutral-500 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`}>
                     <ChevronDown size={16} />
                 </div>
             </button>
@@ -145,14 +145,14 @@ export const GitHubContributions = () => {
                                     href={item.url}
                                     target="_blank"
                                     rel="noreferrer"
-                                    className="group flex items-center justify-between p-3 rounded-lg border border-neutral-800/50 hover:border-neutral-700 bg-neutral-900/30 hover:bg-neutral-900/80 transition-all duration-300"
+                                    className="group flex items-center justify-between p-3 rounded-lg border border-zinc-200 dark:border-neutral-800/50 hover:border-zinc-300 dark:hover:border-neutral-700 bg-zinc-100/60 dark:bg-neutral-900/30 hover:bg-zinc-200/80 dark:hover:bg-neutral-900/80 transition-all duration-300"
                                 >
                                     <div className="flex flex-col gap-1 min-w-0 pr-4">
                                         <div className="flex items-center gap-2 min-w-0">
                                             <span className={`shrink-0 ${item.status === 'merged' ? 'text-purple-400' : 'text-green-400'}`}>
                                                 {item.status === 'merged' ? <GitMerge size={14} /> : <GitPullRequest size={14} />}
                                             </span>
-                                            <span className="text-sm font-bold text-neutral-200 truncate group-hover:text-white transition-colors">
+                                            <span className="text-sm font-bold text-neutral-800 dark:text-neutral-200 truncate group-hover:text-black dark:group-hover:text-white transition-colors">
                                                 {item.title}
                                             </span>
                                         </div>
@@ -160,17 +160,17 @@ export const GitHubContributions = () => {
                                             <span className={`text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded ${item.status === 'merged' ? 'bg-purple-500/10 text-purple-400' : 'bg-green-500/10 text-green-300'}`}>
                                                 {item.status === 'merged' ? 'Merged' : 'Open'}
                                             </span>
-                                            <span className="text-[11px] text-neutral-500 truncate">
-                                                to <span className="text-neutral-400 font-medium group-hover:text-neutral-300 transition-colors">{item.repo}</span>
+                                            <span className="text-[11px] text-neutral-500 dark:text-neutral-500 truncate">
+                                                to <span className="text-neutral-600 dark:text-neutral-400 font-medium group-hover:text-neutral-700 dark:group-hover:text-neutral-300 transition-colors">{item.repo}</span>
                                             </span>
                                         </div>
                                     </div>
 
                                     <div className="flex items-center gap-4 shrink-0">
-                                        <span className="text-[10px] text-neutral-600 font-mono hidden sm:block">
+                                        <span className="text-[10px] text-neutral-500 dark:text-neutral-600 font-mono hidden sm:block">
                                             {format(item.date, 'MMM d')}
                                         </span>
-                                        <div className="p-1.5 rounded-md bg-neutral-800/0 text-neutral-500 group-hover:text-white group-hover:bg-neutral-800 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                                        <div className="p-1.5 rounded-md bg-transparent text-neutral-500 dark:text-neutral-500 group-hover:text-black dark:group-hover:text-white group-hover:bg-zinc-200 dark:group-hover:bg-neutral-800 transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
                                             <ArrowUpRight size={14} />
                                         </div>
                                     </div>
