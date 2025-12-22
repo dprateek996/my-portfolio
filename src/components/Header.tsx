@@ -63,7 +63,7 @@ export const Header = () => {
 
     return (
         <motion.header
-            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "py-4 bg-black/50 backdrop-blur-md border-b border-white/5 dark:bg-black/50 dark:border-white/5" : "py-6 bg-transparent border-b border-transparent"}`}
+            className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${isScrolled ? "py-4 bg-white/70 dark:bg-black/50 backdrop-blur-md border-b border-zinc-200/50 dark:border-white/5" : "py-6 bg-transparent border-b border-transparent"}`}
             initial={{ y: 0, opacity: 1 }}
             animate={{
                 y: isVisible ? 0 : -100,
@@ -74,7 +74,7 @@ export const Header = () => {
             <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">
                 {/* Logo */}
                 <div className={`${spaceGrotesk.className} flex items-center gap-2`}>
-                    <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-zinc-900 border border-zinc-800 dark:border-zinc-800 flex items-center justify-center relative overflow-hidden group">
+                    <div className="w-8 h-8 rounded-lg bg-zinc-900 dark:bg-zinc-900 border border-zinc-700 dark:border-zinc-800 flex items-center justify-center relative overflow-hidden group">
                         <span className="text-lg font-bold text-white group-hover:scale-110 transition-transform">P</span>
                         <div className="absolute inset-0 bg-accent-500/20 blur-xl group-hover:bg-accent-500/30 transition-colors" />
                     </div>

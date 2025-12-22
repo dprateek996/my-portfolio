@@ -28,7 +28,27 @@ const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export default function Portfolio() {
   const [calendarData, setCalendarData] = React.useState<any[]>([]);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+  // Track theme changes
+  React.useEffect(() => {
+    const checkTheme = () => {
+      setIsDarkMode(document.documentElement.classList.contains('dark'));
+    };
+
+    // Initial check
+    checkTheme();
+
+    // Watch for theme changes
+    const observer = new MutationObserver(checkTheme);
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class']
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   React.useEffect(() => {
     async function fetchCalendar() {
@@ -60,8 +80,7 @@ export default function Portfolio() {
 
       <AnimatePresence mode="wait">
         {isLoading && (
-          null
-          // <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
+          <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
         )}
       </AnimatePresence>
 
@@ -145,7 +164,7 @@ export default function Portfolio() {
                         <MapPin size={12} className="text-zinc-500" />
                         <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider md:hidden">Location</span>
                       </div>
-                      <span className="text-xs font-medium text-zinc-300">India <span className="text-zinc-500 text-[10px]">(UTC+5:30)</span></span>
+                      <span className="text-xs font-medium text-neutral-700 dark:text-zinc-300">India <span className="text-neutral-500 dark:text-zinc-500 text-[10px]">(UTC+5:30)</span></span>
                     </div>
 
                     <span className="opacity-10 hidden md:block text-zinc-500">•</span>
@@ -304,13 +323,78 @@ export default function Portfolio() {
             {/* TECH STACK SECTION */}
             <section className="mb-10">
               <h2 className={`${spaceGrotesk.className} text-xl font-bold text-black dark:text-white mb-4`}>Stack</h2>
-              <SpotlightCard className="py-8 px-8 overflow-hidden relative">
-                {/* Fade edges */}
-                <div className="absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-zinc-50 dark:from-neutral-900 to-transparent z-10 pointer-events-none" />
-                <div className="absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-zinc-50 dark:from-neutral-900 to-transparent z-10 pointer-events-none" />
+              <SpotlightCard className="py-8 px-8 overflow-hidden relative group">
 
                 {/* Infinite Scroll Container */}
-                <div className="flex w-max animate-infinite-scroll">
+                <div
+                  ref={(el) => {
+                    if (el) {
+                      const animation = el.animate([
+                        { transform: 'translateX(0)' },
+                        { transform: 'translateX(-50%)' }
+                      ], {
+                        duration: 25000,
+                        iterations: Infinity,
+                        easing: 'linear'
+                      });
+
+                      // Store animation on element to access in handlers
+                      (el as any)._animation = animation;
+
+                      // Ensure running
+                      animation.play();
+                    }
+                  }}
+                  className="flex w-max"
+                  onMouseEnter={(e) => {
+                    const animation = (e.currentTarget as any)._animation;
+                    if (animation) {
+                      // Smoothly decelerate
+                      const targetRate = 0.3; // Slower speed
+                      const startRate = animation.playbackRate;
+                      const duration = 500; // ms
+                      const startTime = performance.now();
+
+                      const tick = (now: number) => {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Ease out cubic
+                        const ease = 1 - Math.pow(1 - progress, 3);
+
+                        animation.playbackRate = startRate + (targetRate - startRate) * ease;
+
+                        if (progress < 1) {
+                          requestAnimationFrame(tick);
+                        }
+                      };
+                      requestAnimationFrame(tick);
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    const animation = (e.currentTarget as any)._animation;
+                    if (animation) {
+                      // Smoothly accelerate back
+                      const targetRate = 1; // Normal speed
+                      const startRate = animation.playbackRate;
+                      const duration = 500; // ms
+                      const startTime = performance.now();
+
+                      const tick = (now: number) => {
+                        const elapsed = now - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        // Ease out cubic
+                        const ease = 1 - Math.pow(1 - progress, 3);
+
+                        animation.playbackRate = startRate + (targetRate - startRate) * ease;
+
+                        if (progress < 1) {
+                          requestAnimationFrame(tick);
+                        }
+                      };
+                      requestAnimationFrame(tick);
+                    }
+                  }}
+                >
                   {/* First set */}
                   <div className="flex items-center gap-12 pr-12">
                     {TECH_STACK.map((tech, i) => (
@@ -318,7 +402,7 @@ export default function Portfolio() {
                         <img
                           src={tech.icon}
                           alt={tech.name}
-                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
+                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
                         />
                         <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>
@@ -331,7 +415,7 @@ export default function Portfolio() {
                         <img
                           src={tech.icon}
                           alt={tech.name}
-                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 group-hover:grayscale-0 transition-all duration-300"
+                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
                         />
                         <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>
@@ -362,7 +446,7 @@ export default function Portfolio() {
                       dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
                       light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
                     }}
-                    colorScheme="dark"
+                    colorScheme={isDarkMode ? 'dark' : 'light'}
                     showWeekdayLabels={true}
                   />
                 </div>

@@ -63,13 +63,13 @@ export const FloatingDock = () => {
             }}
             transition={{ duration: 0.2, ease: "easeOut" }}
         >
-            <div className="flex items-center gap-1 px-2 py-2 rounded-2xl bg-zinc-950/60 backdrop-blur-xl border border-zinc-800/50 shadow-lg shadow-black/20">
+            <div className="flex items-center gap-1 px-2 py-2 rounded-2xl bg-white/80 dark:bg-zinc-950/60 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800/50 shadow-lg shadow-black/5 dark:shadow-black/20">
                 {items.map((item, i) => {
                     const Icon = item.icon;
 
                     const content = (
                         <motion.div
-                            className="p-2.5 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-800/50 transition-all cursor-pointer"
+                            className="p-2.5 rounded-xl text-neutral-600 dark:text-zinc-500 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-all cursor-pointer"
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.95 }}
                         >

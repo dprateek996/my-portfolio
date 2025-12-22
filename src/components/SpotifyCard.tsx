@@ -30,7 +30,7 @@ export const SpotifyCard = () => {
             {/* Track Info */}
             <div className="flex flex-col text-left">
                 <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider group-hover:text-zinc-500 transition-colors">
+                    <span className="text-[9px] font-bold text-neutral-600 dark:text-zinc-600 uppercase tracking-wider group-hover:text-neutral-500 dark:group-hover:text-zinc-500 transition-colors">
                         {isLoading ? "Loading..." : (isPlaying ? "Listening" : "Last Played")}
                     </span>
                     {isPlaying && (
@@ -48,7 +48,7 @@ export const SpotifyCard = () => {
                         </div>
                     )}
                 </div>
-                <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors truncate max-w-[150px]">
+                <span className="text-xs font-medium text-neutral-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white transition-colors truncate max-w-[150px]">
                     {isLoading ? "Spotify" : (data?.title || "Not Playing")}
                 </span>
             </div>

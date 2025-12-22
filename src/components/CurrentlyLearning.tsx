@@ -62,14 +62,14 @@ export const CurrentlyLearning = () => {
             rel="noreferrer"
             className="flex items-center gap-2 group transition-all duration-300 hover:-translate-y-0.5"
         >
-            <div className="text-zinc-500 group-hover:text-red-500/80 transition-colors duration-300">
+            <div className="text-neutral-600 dark:text-zinc-500 group-hover:text-red-500/80 transition-colors duration-300">
                 <Youtube size={13} />
             </div>
             <div className="flex flex-col">
-                <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider group-hover:text-zinc-500 transition-colors">
+                <span className="text-[9px] font-bold text-neutral-600 dark:text-zinc-600 uppercase tracking-wider group-hover:text-neutral-500 dark:group-hover:text-zinc-500 transition-colors">
                     Learning
                 </span>
-                <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors truncate max-w-[200px]">
+                <span className="text-xs font-medium text-neutral-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white transition-colors truncate max-w-[200px]">
                     {data.title}
                 </span>
             </div>

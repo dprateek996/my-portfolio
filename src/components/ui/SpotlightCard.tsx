@@ -1,16 +1,39 @@
-import { useRef, useState, MouseEvent } from "react";
+import { useRef, useState, MouseEvent, useEffect } from "react";
 import { motion } from "framer-motion";
 
 export const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
     const divRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [opacity, setOpacity] = useState(0);
+    const [isDark, setIsDark] = useState(false);
+
+    // Track theme for spotlight color
+    useEffect(() => {
+        const checkTheme = () => {
+            setIsDark(document.documentElement.classList.contains('dark'));
+        };
+
+        checkTheme();
+
+        const observer = new MutationObserver(checkTheme);
+        observer.observe(document.documentElement, {
+            attributes: true,
+            attributeFilter: ['class']
+        });
+
+        return () => observer.disconnect();
+    }, []);
 
     const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
         if (!divRef.current) return;
         const rect = divRef.current.getBoundingClientRect();
         setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
+
+    // Use dark spotlight in light mode, light spotlight in dark mode
+    const spotlightColor = isDark
+        ? 'rgba(255,255,255,0.1)'
+        : 'rgba(0,0,0,0.05)';
 
     return (
         <div
@@ -24,7 +47,7 @@ export const SpotlightCard = ({ children, className = "" }: { children: React.Re
                 className="pointer-events-none absolute -inset-px opacity-0 transition-opacity duration-300"
                 style={{
                     opacity,
-                    background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, rgba(255,255,255,0.1), transparent 40%)`,
+                    background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, ${spotlightColor}, transparent 40%)`,
                 }}
             />
             <div className="relative h-full">{children}</div>

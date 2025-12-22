@@ -14,13 +14,13 @@ export const CodingStatsCard = () => {
 
     return (
         <div className="flex items-center gap-2 group transition-all duration-300 hover:-translate-y-0.5 cursor-default">
-            <div className={`transition-colors duration-300 ${isActive ? 'text-[#3178C6]' : 'text-zinc-500 group-hover:text-[#3178C6]'
+            <div className={`transition-colors duration-300 ${isActive ? 'text-[#3178C6]' : 'text-neutral-600 dark:text-zinc-500 group-hover:text-[#3178C6]'
                 }`}>
                 <Code size={13} />
             </div>
             <div className="flex flex-col">
                 <div className="flex items-center gap-1.5">
-                    <span className="text-[9px] font-bold text-zinc-600 uppercase tracking-wider group-hover:text-zinc-500 transition-colors">
+                    <span className="text-[9px] font-bold text-neutral-600 dark:text-zinc-600 uppercase tracking-wider group-hover:text-neutral-500 dark:group-hover:text-zinc-500 transition-colors">
                         {isActive ? 'Coding' : 'Coded'}
                     </span>
                     {isActive && (
@@ -38,7 +38,7 @@ export const CodingStatsCard = () => {
                         </div>
                     )}
                 </div>
-                <span className="text-xs font-medium text-zinc-300 group-hover:text-white transition-colors">
+                <span className="text-xs font-medium text-neutral-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white transition-colors">
                     {isLoading ? 'Loading...' : `${data?.hours || '0 hrs'} today`}
                 </span>
             </div>
