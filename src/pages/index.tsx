@@ -30,6 +30,7 @@ export default function Portfolio() {
   const [calendarData, setCalendarData] = React.useState<any[]>([]);
   const [isLoading, setIsLoading] = React.useState(true);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
+  const [selectedYear, setSelectedYear] = React.useState<number>(2025);
 
   // Track theme changes
   React.useEffect(() => {
@@ -53,7 +54,7 @@ export default function Portfolio() {
   React.useEffect(() => {
     async function fetchCalendar() {
       try {
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/dprateek996?y=${new Date().getFullYear()}`);
+        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/dprateek996?y=${selectedYear}`);
         const json = await response.json();
 
         if (json.contributions) {
@@ -68,7 +69,7 @@ export default function Portfolio() {
     }
 
     fetchCalendar();
-  }, []);
+  }, [selectedYear]);
 
   return (
     <main className={`min-h-screen bg-white dark:bg-black text-black dark:text-neutral-200 selection:bg-black/20 dark:selection:bg-white/20 ${inter.className}`}>
@@ -428,7 +429,18 @@ export default function Portfolio() {
             {/* GITHUB CONTRIBUTION SECTION */}
             <section className="mb-10">
               <div className="flex items-center justify-between mb-6">
-                <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-black dark:text-white`}>GitHub Activity</h2>
+                <div className="flex items-center gap-3">
+                  <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-black dark:text-white`}>GitHub Activity</h2>
+                  <select
+                    value={selectedYear}
+                    onChange={(e) => setSelectedYear(Number(e.target.value))}
+                    className="text-xs font-medium bg-transparent border border-zinc-300 dark:border-neutral-700 rounded-md px-2 py-1 text-neutral-600 dark:text-neutral-400 cursor-pointer hover:border-zinc-400 dark:hover:border-neutral-500 hover:text-black dark:hover:text-white transition-all focus:outline-none appearance-none pr-6"
+                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 6px center' }}
+                  >
+                    <option value={2025}>2025</option>
+                    <option value={2026}>2026</option>
+                  </select>
+                </div>
                 <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-1 transition-colors">
                   @dprateek996 <ArrowUpRight size={12} />
                 </a>
@@ -468,7 +480,7 @@ export default function Portfolio() {
 
             {/* Footer */}
             <footer className="py-4 text-center text-neutral-400 dark:text-neutral-700 text-[10px] border-t border-zinc-200 dark:border-neutral-900">
-              <p>© 2025 {PERSONAL_INFO.name}</p>
+              <p>© 2026 {PERSONAL_INFO.name}</p>
             </footer>
 
           </div>

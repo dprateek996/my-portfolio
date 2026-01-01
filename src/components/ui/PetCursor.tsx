@@ -20,7 +20,7 @@ export default function PetCursor() {
         let idleAnimationFrame = 0;
         let forceSleep = false;
 
-        const nekoSpeed = 5; // Slower speed
+        const nekoSpeed = 5; // Normal speed
         const spriteSets: Record<string, number[][]> = {
             idle: [[-3, -3]],
             alert: [[-7, -3]],
@@ -151,7 +151,7 @@ export default function PetCursor() {
         nekoEl.addEventListener("click", onNekoClick);
         window.addEventListener("mousemove", onMouseMove);
 
-        // Run at slower rate for more natural movement
+        // Run at 2x speed (original was speed=5, interval=100)
         const interval = setInterval(frame, 100);
 
         // Initial position
