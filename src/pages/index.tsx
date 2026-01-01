@@ -27,10 +27,10 @@ const inter = Inter({ subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
 export default function Portfolio() {
-  const [calendarData, setCalendarData] = React.useState<any[]>([]);
+  const [yearData, setYearData] = React.useState<{ [key: number]: { contributions: any[], total: number } }>({});
   const [isLoading, setIsLoading] = React.useState(true);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
-  const [selectedYear, setSelectedYear] = React.useState<number>(2025);
+  const [visibleYear, setVisibleYear] = React.useState(2026);
 
   // Track theme changes
   React.useEffect(() => {
@@ -54,22 +54,28 @@ export default function Portfolio() {
   React.useEffect(() => {
     async function fetchCalendar() {
       try {
-        const response = await fetch(`https://github-contributions-api.jogruber.de/v4/dprateek996?y=${selectedYear}`);
-        const json = await response.json();
+        const years = [2025, 2026];
+        const data: { [key: number]: { contributions: any[], total: number } } = {};
 
-        if (json.contributions) {
-          setCalendarData(json.contributions);
+        for (const year of years) {
+          const response = await fetch(`/api/github-contributions?year=${year}`);
+          const json = await response.json();
+          if (json.contributions) {
+            const total = json.contributions.reduce((sum: number, day: any) => sum + day.count, 0);
+            data[year] = { contributions: json.contributions, total };
+          }
         }
+
+        setYearData(data);
       } catch (e) {
         console.error("Failed to fetch GitHub calendar", e);
-        // data will remain empty (shim will show)
       } finally {
         setIsLoading(false);
       }
     }
 
     fetchCalendar();
-  }, [selectedYear]);
+  }, []);
 
   return (
     <main className={`min-h-screen bg-white dark:bg-black text-black dark:text-neutral-200 selection:bg-black/20 dark:selection:bg-white/20 ${inter.className}`}>
@@ -429,27 +435,36 @@ export default function Portfolio() {
             {/* GITHUB CONTRIBUTION SECTION */}
             <section className="mb-10">
               <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-black dark:text-white`}>GitHub Activity</h2>
-                  <select
-                    value={selectedYear}
-                    onChange={(e) => setSelectedYear(Number(e.target.value))}
-                    className="text-xs font-medium bg-transparent border border-zinc-300 dark:border-neutral-700 rounded-md px-2 py-1 text-neutral-600 dark:text-neutral-400 cursor-pointer hover:border-zinc-400 dark:hover:border-neutral-500 hover:text-black dark:hover:text-white transition-all focus:outline-none appearance-none pr-6"
-                    style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: 'no-repeat', backgroundPosition: 'right 6px center' }}
-                  >
-                    <option value={2025}>2025</option>
-                    <option value={2026}>2026</option>
-                  </select>
-                </div>
+                <h2 className={`${spaceGrotesk.className} text-2xl font-bold text-black dark:text-white`}>GitHub Activity</h2>
                 <a href="https://github.com/dprateek996" target="_blank" className="text-xs font-mono text-neutral-500 dark:text-neutral-400 hover:text-black dark:hover:text-white flex items-center gap-1 transition-colors">
                   @dprateek996 <ArrowUpRight size={12} />
                 </a>
               </div>
               <SpotlightCard className="p-6">
+                {/* Contribution count label */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-sm text-neutral-600 dark:text-neutral-400">
+                    <span className="font-semibold text-black dark:text-white">{yearData[visibleYear]?.total || 0}</span> contributions in {visibleYear}
+                  </span>
+                  <div className="flex gap-2">
+                    {[2025, 2026].map((year) => (
+                      <button
+                        key={year}
+                        onClick={() => setVisibleYear(year)}
+                        className={`text-xs px-2 py-1 rounded transition-all ${visibleYear === year
+                            ? 'bg-accent-500/20 text-accent-400 font-medium'
+                            : 'text-neutral-500 hover:text-black dark:hover:text-white'
+                          }`}
+                      >
+                        {year}
+                      </button>
+                    ))}
+                  </div>
+                </div>
                 <div className="w-full overflow-x-auto custom-scrollbar opacity-90 hover:opacity-100 transition-opacity flex justify-end py-2 mb-8">
                   <ActivityCalendar
-                    data={calendarData}
-                    loading={calendarData.length === 0}
+                    data={yearData[visibleYear]?.contributions || []}
+                    loading={Object.keys(yearData).length === 0}
                     blockSize={12}
                     blockRadius={2}
                     blockMargin={3}
