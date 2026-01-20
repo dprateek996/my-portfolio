@@ -9,8 +9,13 @@ export const getStats = async () => {
     // Get today's date in YYYY-MM-DD format
     const today = new Date().toISOString().split('T')[0];
 
+    // Get date 7 days ago
+    const startObj = new Date();
+    startObj.setDate(startObj.getDate() - 7);
+    const start = startObj.toISOString().split('T')[0];
+
     const response = await fetch(
-        `${WAKATIME_API}/users/current/summaries?start=${today}&end=${today}`,
+        `${WAKATIME_API}/users/current/summaries?start=${start}&end=${today}`,
         { headers }
     );
 

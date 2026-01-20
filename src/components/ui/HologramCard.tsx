@@ -1,5 +1,5 @@
 
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 
 export const HologramCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
-import { Github, Linkedin, Mail, Twitter, MapPin, ArrowUpRight, Music, Code, Terminal } from "lucide-react";
+import { MapPin, ArrowUpRight, Terminal } from "lucide-react";
 import dynamic from 'next/dynamic';
 
 import { Header } from "@/components/Header";
@@ -154,7 +154,7 @@ export default function Portfolio() {
                   <div>
                     <h2 className={`${spaceGrotesk.className} text-lg font-bold text-black dark:text-white mb-2`}>About</h2>
                     <p className="text-neutral-600 dark:text-neutral-400 leading-relaxed text-sm max-w-3xl">
-                      I'm a <span className="text-black dark:text-white font-medium">Full Stack Engineer</span> based in <span className="text-accent-400 font-medium">India</span>, building products that solve real problems.
+                      I&apos;m a <span className="text-black dark:text-white font-medium">Full Stack Engineer</span> based in <span className="text-accent-400 font-medium">India</span>, building products that solve real problems.
                       I work across the entire stack—<span className="text-neutral-700 dark:text-neutral-300">UI/UX to deployment</span>—shipping fast, learning faster.
                     </p>
                   </div>
@@ -452,8 +452,8 @@ export default function Portfolio() {
                         key={year}
                         onClick={() => setVisibleYear(year)}
                         className={`text-xs px-2 py-1 rounded transition-all ${visibleYear === year
-                            ? 'bg-accent-500/20 text-accent-400 font-medium'
-                            : 'text-neutral-500 hover:text-black dark:hover:text-white'
+                          ? 'bg-accent-500/20 text-accent-400 font-medium'
+                          : 'text-neutral-500 hover:text-black dark:hover:text-white'
                           }`}
                       >
                         {year}

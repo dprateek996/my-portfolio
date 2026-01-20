@@ -19,7 +19,7 @@ export const RenxaCursor = () => {
         const yTo = gsap.quickTo(cursor, "y", { duration: 0.6, ease: "power3" });
 
         // 2. State for velocity (squish effect)
-        let mousePos = { x: 0, y: 0 };
+        const mousePos = { x: 0, y: 0 };
 
         const handleMouseMove = (e: MouseEvent) => {
             const { clientX, clientY } = e;

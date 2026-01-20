@@ -39,7 +39,7 @@ export const CodingStatsCard = () => {
                     )}
                 </div>
                 <span className="text-xs font-medium text-neutral-700 dark:text-zinc-300 group-hover:text-black dark:group-hover:text-white transition-colors">
-                    {isLoading ? 'Loading...' : `${data?.hours || '0 hrs'} today`}
+                    {isLoading ? 'Loading...' : `${data?.hours || '0 hrs'} ${data?.dateLabel || 'today'}`}
                 </span>
             </div>
         </div>

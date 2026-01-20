@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Home, Github, FileText, Mail, ChevronUp } from "lucide-react";
+import { Home, Github, FileText, Mail } from "lucide-react";
 
 const items = [
     {

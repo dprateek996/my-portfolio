@@ -1,5 +1,5 @@
 import { useRef, useState, MouseEvent, useEffect } from "react";
-import { motion } from "framer-motion";
+
 
 export const SpotlightCard = ({ children, className = "" }: { children: React.ReactNode; className?: string }) => {
     const divRef = useRef<HTMLDivElement>(null);

@@ -9,7 +9,6 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@headlessui/react": "^2.2.9",
     "@vercel/analytics": "^1.6.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -24,7 +23,6 @@
     "react-dom": "19.2.1",
     "swr": "^2.3.8",
     "tailwind-merge": "^3.4.0",
-    "tailwindcss-animate": "^1.0.7",
     "youtubei.js": "^16.0.1"
   },
   "devDependencies": {
