@@ -46,17 +46,58 @@ export const Header = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [lastScrollY]);
 
-    const toggleTheme = () => {
+    const toggleTheme = async (e: React.MouseEvent<HTMLButtonElement>) => {
         const newIsDark = !isDark;
         setIsDark(newIsDark);
 
-        if (newIsDark) {
-            document.documentElement.classList.add('dark');
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.documentElement.classList.remove('dark');
-            localStorage.setItem('theme', 'light');
+        // @ts-ignore
+        if (!document.startViewTransition) {
+            if (newIsDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+            return;
         }
+
+        const x = e.clientX;
+        const y = e.clientY;
+        const endRadius = Math.hypot(
+            Math.max(x, innerWidth - x),
+            Math.max(y, innerHeight - y)
+        );
+
+        // @ts-ignore
+        const transition = document.startViewTransition(() => {
+            if (newIsDark) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // @ts-ignore
+        await transition.ready;
+
+        const clipPath = [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+        ];
+
+        document.documentElement.animate(
+            {
+                clipPath: clipPath,
+            },
+            {
+                duration: 500,
+                easing: "ease-in-out",
+                pseudoElement: "::view-transition-new(root)",
+            }
+        );
     };
 
     return (

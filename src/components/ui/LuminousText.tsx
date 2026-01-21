@@ -9,28 +9,28 @@ interface LuminousTextProps {
 
 export const LuminousText = ({ children, className }: LuminousTextProps) => {
     return (
-        <div className={cn("relative inline-block overflow-hidden", className)}>
-            {/* Base Text - slightly dimmer to make the shine pop */}
-            <h1 className="relative z-10 text-neutral-500 dark:text-neutral-600">
+        <div className={cn("relative cursor-default inline-block", className)}>
+            {/* 1. Base Text (Readable) */}
+            {/* Light Mode: neutral-900 (Black) - heavily darkened as requested */}
+            {/* Dark Mode: neutral-600 (Dark Gray) - dim base for glow */}
+            <span className="text-neutral-900 dark:text-neutral-600">
                 {children}
-            </h1>
+            </span>
 
-            {/* Shimmer Overlay - Tighter gradient for "one letter to another" effect */}
+            {/* Shimmer Overlay */}
             <div
-                className="absolute inset-0 z-20 pointer-events-none select-none animate-shine"
+                className="absolute inset-0 z-20 pointer-events-none select-none"
                 aria-hidden="true"
             >
                 {/* 
                     linear-gradient sweep:
-                    - Light Mode: dark shimmer (via-black)
-                    - Dark Mode: light shimmer (via-white)
+                    - Light Mode: White/Silver glint on black text (Metallic effect)
+                    - Dark Mode: White glow on dark gray text (Luminous effect)
                 */}
-                <h1 className="bg-clip-text text-transparent bg-gradient-to-r from-transparent via-black/80 dark:via-white/80 to-transparent bg-[length:200%_100%]">
+                <span className="will-change-[background-position] animate-shine bg-clip-text text-transparent bg-gradient-to-r from-transparent via-white/80 to-transparent bg-[length:200%_100%] block">
                     {children}
-                </h1>
+                </span>
             </div>
-
-            {/* Removed Ambient Glow as requested */}
         </div>
     );
 };

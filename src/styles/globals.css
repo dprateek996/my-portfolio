@@ -103,6 +103,18 @@
 
 body {
   background: rgb(var(--background-start-rgb));
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+/* View Transitions Overrides */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-image-pair(root) {
+  isolation: isolate;
 }
 
 /* Smooth Scrolling */
@@ -134,7 +146,7 @@ html {
 }
 
 .animate-shine {
-  animation: shine 8s linear infinite;
+  animation: shine 5s linear infinite;
 }
 
 .animate-infinite-scroll {

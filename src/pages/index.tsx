@@ -119,37 +119,63 @@ export default function Portfolio() {
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-16">
 
             {/* HERO - Minimal & Left Aligned */}
-            <motion.section
-              className="mb-16 mt-8 sm:mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              <div className="flex flex-col items-start text-left">
+            <section className="mb-16 mt-8 sm:mt-12">
+              <motion.div
+                className="flex flex-col items-start text-left"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  visible: { transition: { staggerChildren: 0.1 } }
+                }}
+              >
 
                 {/* Status - Minimal Pulse */}
-                <div className="flex items-center gap-2 mb-6">
+                <motion.div
+                  className="flex items-center gap-2 mb-6"
+                  variants={{
+                    hidden: { opacity: 0, y: 10 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+                  }}
+                >
                   <div className="relative flex h-2.5 w-2.5">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                   </div>
                   <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400">Available for work</span>
-                </div>
+                </motion.div>
 
 
 
-                {/* Name */}
-                <LuminousText className="text-5xl sm:text-7xl font-medium tracking-tighter mb-6">
-                  {PERSONAL_INFO.name}
-                </LuminousText>
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 20 },
+                    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+                  }}
+                >
+                  <LuminousText className="text-5xl sm:text-7xl font-medium tracking-tighter mb-4">
+                    {PERSONAL_INFO.name}
+                  </LuminousText>
+                </motion.div>
 
                 {/* Tagline */}
-                <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed font-mono">
+                <motion.p
+                  className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed font-mono"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { opacity: 1, transition: { duration: 0.6, delay: 0.1 } }
+                  }}
+                >
                   {PERSONAL_INFO.headline}
-                </p>
+                </motion.p>
 
                 {/* Social Links - Minimal Row */}
-                <div className="flex items-center gap-4 mt-8">
+                <motion.div
+                  className="flex items-center gap-4 mt-8"
+                  variants={{
+                    hidden: { opacity: 0 },
+                    visible: { opacity: 1, transition: { delay: 0.2 } }
+                  }}
+                >
                   <TooltipProvider delayDuration={0}>
                     {PERSONAL_INFO.socials.map((social) => (
                       <Tooltip key={social.name}>
@@ -158,7 +184,7 @@ export default function Portfolio() {
                             href={social.href}
                             target="_blank"
                             rel="noreferrer"
-                            className="text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+                            className="text-neutral-400 hover:text-black dark:hover:text-white transition-all duration-200 hover:scale-110"
                           >
                             <social.icon size={22} strokeWidth={1.5} />
                           </a>
@@ -169,9 +195,9 @@ export default function Portfolio() {
                       </Tooltip>
                     ))}
                   </TooltipProvider>
-                </div>
-              </div>
-            </motion.section>
+                </motion.div>
+              </motion.div>
+            </section>
 
             {/* ABOUT SECTION - Dashboard Style */}
             <section className="mb-10">
