@@ -20,7 +20,7 @@ export const CurrentlyLearning = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const res = await fetch('/api/youtube');
+                const res = await fetch(`/api/youtube?t=${Date.now()}`);
                 const json = await res.json();
                 setData(json);
             } catch (error) {

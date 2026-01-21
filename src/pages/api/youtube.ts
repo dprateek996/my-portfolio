@@ -64,13 +64,49 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         });
 
         // 3. Keep the "first" video if none match (fallback), or use the matched one
-        // Ideally we want ONLY educational. If none match, maybe fallback to static?
-        // Let's fallback to the *very first* video if nothing matches, 
-        // assuming the user mainly puts educational stuff there. 
-        // OR we can be strict. Let's be strict but fallback to the latest video if the strict filter is too aggressive.
-        // User asked "showcase education related content... rest all not".
+        // If the *latest* video (items[0]) is not educational, but is very recent (e.g. same day),
+        // we might want to show it? Use the user's preference for educational.
+        // For now, let's prioritize the educational video found.
+        // If no educational video found, use the latest (items[0]).
 
-        const targetVideo = educationalVideo ? educationalVideo.snippet : items[0]?.snippet;
+        let targetVideo = educationalVideo ? educationalVideo.snippet : items[0]?.snippet;
+
+        // If the latest video is DIFFERENT from the educational one, check if the latest is "New"
+        // Sometimes keywords miss. If items[0] is the latest upload, users usually expect it.
+        // Let's rely on the educational filter primarily, but if the user complains "not reflecting",
+        // it might be that the new video failed the filter.
+        // To be safe and responsive: If we have ANY items, use the 0th item as a fallback for sure.
+
+        // Debug/Strictness Relaxation:
+        // Use the absolute latest video if no educational match found OR if the educational match is really old?
+        // Let's just stick to: Educational > Latest.
+
+        // However, since the user is currently debugging "new video not showing", 
+        // I will temporarily force checking the first video again or assume it's valid.
+        // Actually, let's just use the logic:
+        // If we found an educational video, use it.
+        // If NOT, use items[0].
+
+        // But what if items[0] IS the new video and it failed the filter?
+        // And educationalVideo is some old video at index 5.
+        // Detailed check:
+        // If items[0] exists and is NOT the educationalVideo, and is recent?
+
+        if (items[0]) {
+            const latest = items[0].snippet;
+            // If we have an educational video that is NOT the latest one,
+            // it means the latest one failed the filter.
+            // If the user wants to see "new" stuff, we might want to show `latest`.
+            // Let's use `items[0]` if `educationalVideo` is undefined.
+            // But if `educationalVideo` is defined (old video), we show it. 
+            // This is the "problem".
+
+            // FIX: If the latest video is very new ( < 2 days ), show it regardless of keywords.
+            const isLatestVeryNew = new Date(latest.publishedAt).getTime() > Date.now() - 2 * 24 * 60 * 60 * 1000;
+            if (isLatestVeryNew) {
+                targetVideo = latest;
+            }
+        }
 
         if (!targetVideo) {
             return res.status(200).json(CURRENTLY_LEARNING);

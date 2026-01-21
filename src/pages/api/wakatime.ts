@@ -6,6 +6,12 @@ export default async function handler(
     res: NextApiResponse
 ) {
     try {
+        // Set Cache-Control headers to ensure fresh data
+        res.setHeader(
+            'Cache-Control',
+            'public, s-maxage=60, stale-while-revalidate=300'
+        );
+
         const statsData = await getStats();
 
         if (!statsData || !statsData.data || statsData.data.length === 0) {

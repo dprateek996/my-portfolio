@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Sun, Moon } from "lucide-react";
+import { Logo } from "./ui/Logo";
 
 export const Header = () => {
     const [isVisible, setIsVisible] = useState(true);
@@ -111,9 +112,9 @@ export const Header = () => {
             transition={{ duration: 0.3, ease: "easeInOut" }}
         >
             <div className="max-w-4xl mx-auto px-4 sm:px-6 flex items-center justify-between">
-                {/* Logo - Minimal Text */}
-                <div className="flex items-center gap-2">
-                    <span className="text-sm font-semibold text-black dark:text-white tracking-tight">Prateek Dwivedi</span>
+                {/* Logo - Minimal Geometric Icon */}
+                <div className="flex items-center gap-2 group cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                    <Logo className="h-8 w-8" />
                 </div>
 
                 {/* Theme Toggle */}
