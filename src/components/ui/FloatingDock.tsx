@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Home, Github, FileText, Mail } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const items = [
     {
@@ -64,38 +65,46 @@ export const FloatingDock = () => {
             transition={{ duration: 0.2, ease: "easeOut" }}
         >
             <div className="flex items-center gap-1 px-2 py-2 rounded-2xl bg-white/80 dark:bg-zinc-950/60 backdrop-blur-xl border border-zinc-200 dark:border-zinc-800/50 shadow-lg shadow-black/5 dark:shadow-black/20">
-                {items.map((item, i) => {
-                    const Icon = item.icon;
+                <TooltipProvider delayDuration={0}>
+                    {items.map((item, i) => {
+                        const Icon = item.icon;
 
-                    const content = (
-                        <motion.div
-                            className="p-2.5 rounded-xl text-neutral-600 dark:text-zinc-500 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-all cursor-pointer"
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                        >
-                            <Icon size={18} strokeWidth={1.5} />
-                        </motion.div>
-                    );
+                        const content = (
+                            <motion.div
+                                className="p-2.5 rounded-xl text-neutral-600 dark:text-zinc-500 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800/50 transition-all cursor-pointer"
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                <Icon size={18} strokeWidth={1.5} />
+                            </motion.div>
+                        );
 
-                    if (item.href) {
-                        return (
+                        const trigger = item.href ? (
                             <a
-                                key={i}
                                 href={item.href}
                                 target={item.external ? "_blank" : undefined}
                                 rel={item.external ? "noopener noreferrer" : undefined}
                             >
                                 {content}
                             </a>
+                        ) : (
+                            <button onClick={item.onClick}>
+                                {content}
+                            </button>
                         );
-                    }
 
-                    return (
-                        <button key={i} onClick={item.onClick}>
-                            {content}
-                        </button>
-                    );
-                })}
+                        return (
+                            <Tooltip key={i}>
+                                <TooltipTrigger asChild>
+                                    {trigger}
+                                </TooltipTrigger>
+                                <TooltipContent className="text-xs font-medium">
+                                    {item.label}
+                                </TooltipContent>
+                            </Tooltip>
+                        );
+                    })}
+                </TooltipProvider>
             </div>
         </motion.nav>
     );

@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { Play, Youtube } from "lucide-react";
+import { Youtube } from "lucide-react";
 import { SpotlightCard } from "./ui/SpotlightCard";
 
 interface VideoData {

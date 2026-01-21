@@ -9,8 +9,9 @@
  * 5. Run this script: node scripts/generate-spotify-token.js <CLIENT_ID> <CLIENT_SECRET>
  */
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const http = require('http');
-const querystring = require('node:querystring'); // Use node: namespace or just querystring
+// const querystring = require('node:querystring'); 
 const { spawn } = require('child_process');
 
 // polyfill fetch if needed (Node 18+ has it)

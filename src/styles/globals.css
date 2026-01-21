@@ -11,6 +11,10 @@
   --background-start-rgb: 255, 255, 255;
   --background-end-rgb: 255, 255, 255;
 
+  /* Fonts */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
   /* Accent Color - Change the hue (0-360) to shift the entire color scheme */
   /* 25 = Orange/Amber, 160 = Emerald, 220 = Blue, 280 = Purple */
   --accent-hue: 25;
@@ -104,6 +108,8 @@ body {
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv07", "cv11";
+  text-rendering: optimizeLegibility;
 }
 
 /* Infinite Scroll Animation */
@@ -115,6 +121,20 @@ html {
   to {
     transform: translateX(-50%);
   }
+}
+
+@keyframes shine {
+  from {
+    background-position: 200% 0;
+  }
+
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.animate-shine {
+  animation: shine 8s linear infinite;
 }
 
 .animate-infinite-scroll {
@@ -192,8 +212,25 @@ html {
 }
 
 @layer base {
+  @supports (color:color-mix(in lab, red, red)) {
+    * {
+      outline-color: color-mix(in oklab, var(--ring) 50%, transparent);
+    }
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop {
+    box-sizing: border-box;
+    border: 0 solid;
+    margin: 0;
+    padding: 0;
+    @apply border-border;
+  }
+
   * {
-    @apply border-border outline-ring/50;
+    @apply outline-ring/50;
   }
 
   body {

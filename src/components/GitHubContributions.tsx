@@ -139,7 +139,7 @@ export const GitHubContributions = () => {
                         className="overflow-hidden"
                     >
                         <div className="flex flex-col gap-2 pt-2">
-                            {contributions.map((item, index) => (
+                            {contributions.map((item) => (
                                 <a
                                     key={item.id}
                                     href={item.url}

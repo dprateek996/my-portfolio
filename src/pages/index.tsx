@@ -15,6 +15,9 @@ import { SpotlightCard } from "@/components/ui/SpotlightCard";
 import { FloatingDock } from "@/components/ui/FloatingDock";
 import { Preloader } from "@/components/Preloader";
 import PetCursor from "@/components/ui/PetCursor";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+
+import { LuminousText } from "@/components/ui/LuminousText";
 
 // Lazy load the heavy chart so the page loads instantly
 const ActivityCalendar = dynamic(() => import('react-activity-calendar').then(mod => mod.ActivityCalendar), {
@@ -26,8 +29,19 @@ const ActivityCalendar = dynamic(() => import('react-activity-calendar').then(mo
 const inter = Inter({ subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
 
+interface Day {
+  date: string;
+  count: number;
+  level: number;
+}
+
+interface YearData {
+  contributions: Day[];
+  total: number;
+}
+
 export default function Portfolio() {
-  const [yearData, setYearData] = React.useState<{ [key: number]: { contributions: any[], total: number } }>({});
+  const [yearData, setYearData] = React.useState<{ [key: number]: YearData }>({});
   const [isLoading, setIsLoading] = React.useState(true);
   const [isDarkMode, setIsDarkMode] = React.useState(false);
   const [visibleYear, setVisibleYear] = React.useState(2026);
@@ -55,13 +69,13 @@ export default function Portfolio() {
     async function fetchCalendar() {
       try {
         const years = [2025, 2026];
-        const data: { [key: number]: { contributions: any[], total: number } } = {};
+        const data: { [key: number]: YearData } = {};
 
         for (const year of years) {
           const response = await fetch(`/api/github-contributions?year=${year}`);
           const json = await response.json();
           if (json.contributions) {
-            const total = json.contributions.reduce((sum: number, day: any) => sum + day.count, 0);
+            const total = json.contributions.reduce((sum: number, day: Day) => sum + day.count, 0);
             data[year] = { contributions: json.contributions, total };
           }
         }
@@ -104,45 +118,58 @@ export default function Portfolio() {
           {/* CENTERED BENTO CONTAINER */}
           <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8 md:py-16">
 
-            {/* HERO - Compact & Centered */}
+            {/* HERO - Minimal & Left Aligned */}
             <motion.section
-              className="text-center mb-12"
+              className="mb-16 mt-8 sm:mt-12"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
             >
-              {/* Status Badge */}
-              <div className="inline-flex items-center gap-2 mb-6 bg-zinc-100/60 dark:bg-neutral-900/60 px-4 py-2 rounded-full border border-zinc-200 dark:border-neutral-800 backdrop-blur-md">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-accent-500"></span>
-                </span>
-                <span className="text-xs font-medium text-accent-400">Available for work</span>
-              </div>
+              <div className="flex flex-col items-start text-left">
 
-              {/* Name */}
-              <h1 className={`${spaceGrotesk.className} text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter mb-3 bg-clip-text text-transparent bg-gradient-to-b from-black via-black to-neutral-500 dark:from-white dark:via-white dark:to-neutral-500`}>
-                {PERSONAL_INFO.name}
-              </h1>
+                {/* Status - Minimal Pulse */}
+                <div className="flex items-center gap-2 mb-6">
+                  <div className="relative flex h-2.5 w-2.5">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
+                  </div>
+                  <span className="text-xs font-medium text-neutral-500 dark:text-neutral-400">Available for work</span>
+                </div>
 
-              {/* Tagline */}
-              <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-lg mx-auto leading-snug">
-                {PERSONAL_INFO.headline}
-              </p>
 
-              {/* Social Links */}
-              <div className="flex justify-center gap-3 mt-6">
-                {PERSONAL_INFO.socials.map((social) => (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="p-2.5 text-neutral-500 dark:text-neutral-500 hover:text-black dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-neutral-800 rounded-lg transition-all border border-zinc-200 dark:border-neutral-800 hover:border-zinc-300 dark:hover:border-neutral-700"
-                  >
-                    <social.icon size={20} />
-                  </a>
-                ))}
+
+                {/* Name */}
+                <LuminousText className="text-5xl sm:text-7xl font-medium tracking-tighter mb-6">
+                  {PERSONAL_INFO.name}
+                </LuminousText>
+
+                {/* Tagline */}
+                <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed font-mono">
+                  {PERSONAL_INFO.headline}
+                </p>
+
+                {/* Social Links - Minimal Row */}
+                <div className="flex items-center gap-4 mt-8">
+                  <TooltipProvider delayDuration={0}>
+                    {PERSONAL_INFO.socials.map((social) => (
+                      <Tooltip key={social.name}>
+                        <TooltipTrigger asChild>
+                          <a
+                            href={social.href}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-neutral-400 hover:text-black dark:hover:text-white transition-colors"
+                          >
+                            <social.icon size={22} strokeWidth={1.5} />
+                          </a>
+                        </TooltipTrigger>
+                        <TooltipContent side="bottom" className="text-xs font-mono">
+                          {social.name}
+                        </TooltipContent>
+                      </Tooltip>
+                    ))}
+                  </TooltipProvider>
+                </div>
               </div>
             </motion.section>
 
@@ -346,7 +373,7 @@ export default function Portfolio() {
                       });
 
                       // Store animation on element to access in handlers
-                      (el as any)._animation = animation;
+                      (el as HTMLDivElement & { _animation?: Animation })._animation = animation;
 
                       // Ensure running
                       animation.play();
@@ -354,7 +381,7 @@ export default function Portfolio() {
                   }}
                   className="flex w-max"
                   onMouseEnter={(e) => {
-                    const animation = (e.currentTarget as any)._animation;
+                    const animation = (e.currentTarget as HTMLDivElement & { _animation?: Animation })._animation;
                     if (animation) {
                       // Smoothly decelerate
                       const targetRate = 0.3; // Slower speed
@@ -378,7 +405,7 @@ export default function Portfolio() {
                     }
                   }}
                   onMouseLeave={(e) => {
-                    const animation = (e.currentTarget as any)._animation;
+                    const animation = (e.currentTarget as HTMLDivElement & { _animation?: Animation })._animation;
                     if (animation) {
                       // Smoothly accelerate back
                       const targetRate = 1; // Normal speed
