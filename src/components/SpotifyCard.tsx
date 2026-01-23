@@ -1,6 +1,7 @@
 import { Music } from "lucide-react";
 import { motion } from "framer-motion";
 import useSWR from "swr";
+import Image from "next/image";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -17,10 +18,12 @@ export const SpotifyCard = () => {
             {/* Album Art */}
             <div className="relative flex items-center justify-center h-10 w-10 shrink-0 rounded-md overflow-hidden bg-neutral-800">
                 {data?.albumImageUrl ? (
-                    <img
+                    <Image
                         src={data.albumImageUrl}
-                        alt={data.album}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        alt={data.album || "Album art"}
+                        fill
+                        className="object-cover"
+                        unoptimized
                     />
                 ) : (
                     <Music size={16} className="text-zinc-500" />

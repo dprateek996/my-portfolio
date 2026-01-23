@@ -1,6 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getNowPlaying, getRecentlyPlayed } from '../../lib/spotify';
 
+interface SpotifyArtist {
+    name: string;
+}
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -23,7 +27,7 @@ export default async function handler(
             return res.status(200).json({
                 isPlaying: false,
                 title: recentTrack.name,
-                artist: recentTrack.artists.map((_artist: any) => _artist.name).join(', '),
+                artist: recentTrack.artists.map((_artist: SpotifyArtist) => _artist.name).join(', '),
                 album: recentTrack.album.name,
                 albumImageUrl: recentTrack.album.images[0].url,
                 songUrl: recentTrack.external_urls.spotify,
@@ -39,7 +43,7 @@ export default async function handler(
 
         const isPlaying = song.is_playing;
         const title = song.item.name;
-        const artist = song.item.artists.map((_artist: any) => _artist.name).join(', ');
+        const artist = song.item.artists.map((_artist: SpotifyArtist) => _artist.name).join(', ');
         const album = song.item.album.name;
         const albumImageUrl = song.item.album.images[0].url;
         const songUrl = song.item.external_urls.spotify;

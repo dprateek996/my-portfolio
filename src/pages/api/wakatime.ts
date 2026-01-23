@@ -75,7 +75,7 @@ export default async function handler(
         // Get top 3 languages
         const topLanguages = (data.languages || [])
             .slice(0, 3)
-            .map((lang: any) => ({
+            .map((lang: { name: string; percent: number }) => ({
                 name: lang.name,
                 percent: Math.round(lang.percent),
             }));

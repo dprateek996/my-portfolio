@@ -6,9 +6,6 @@ const headers = {
 };
 
 export const getStats = async () => {
-    // Get today's date in YYYY-MM-DD format
-    const todayObj = new Date();
-    const today = todayObj.toISOString().split('T')[0];
 
     // Get tomorrow's date to ensure we cover all timezones (e.g. if user is ahead of UTC)
     const tomorrowObj = new Date();
@@ -17,7 +14,7 @@ export const getStats = async () => {
 
     // Get date 30 days ago to find previous sessions if user was inactive recently
     const startObj = new Date();
-    startObj.setDate(startObj.getDate() - 30);
+    startObj.setDate(startObj.getDate() - 7);
     const start = startObj.toISOString().split('T')[0];
 
     const response = await fetch(

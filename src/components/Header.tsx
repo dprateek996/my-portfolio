@@ -51,7 +51,6 @@ export const Header = () => {
         const newIsDark = !isDark;
         setIsDark(newIsDark);
 
-        // @ts-ignore
         if (!document.startViewTransition) {
             if (newIsDark) {
                 document.documentElement.classList.add('dark');
@@ -70,7 +69,6 @@ export const Header = () => {
             Math.max(y, innerHeight - y)
         );
 
-        // @ts-ignore
         const transition = document.startViewTransition(() => {
             if (newIsDark) {
                 document.documentElement.classList.add('dark');
@@ -81,7 +79,6 @@ export const Header = () => {
             }
         });
 
-        // @ts-ignore
         await transition.ready;
 
         const clipPath = [

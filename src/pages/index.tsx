@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
 import { MapPin, ArrowUpRight, Terminal } from "lucide-react";
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 
 import { Header } from "@/components/Header";
 import { CurrentlyLearning } from "@/components/CurrentlyLearning";
@@ -459,10 +460,13 @@ export default function Portfolio() {
                   <div className="flex items-center gap-12 pr-12">
                     {TECH_STACK.map((tech, i) => (
                       <div key={`a-${i}`} className="flex flex-col items-center gap-3 group">
-                        <img
+                        <Image
                           src={tech.icon}
                           alt={tech.name}
-                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
+                          width={40}
+                          height={40}
+                          className="object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
+                          unoptimized
                         />
                         <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>
@@ -472,10 +476,13 @@ export default function Portfolio() {
                   <div className="flex items-center gap-12 pr-12">
                     {TECH_STACK.map((tech, i) => (
                       <div key={`b-${i}`} className="flex flex-col items-center gap-3 group">
-                        <img
+                        <Image
                           src={tech.icon}
                           alt={tech.name}
-                          className="w-10 h-10 object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
+                          width={40}
+                          height={40}
+                          className="object-contain grayscale brightness-75 group-hover:brightness-100 transition-all duration-300"
+                          unoptimized
                         />
                         <span className="text-xs text-neutral-600 dark:text-neutral-500 font-medium group-hover:text-neutral-800 dark:group-hover:text-neutral-300 transition-colors">{tech.name}</span>
                       </div>

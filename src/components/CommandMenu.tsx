@@ -72,7 +72,7 @@ export const CommandMenu = () => {
 };
 
 // Helper for items
-const Item = ({ icon: Icon, text, action }: { icon: any, text: string, action: () => void }) => {
+const Item = ({ icon: Icon, text, action }: { icon: React.ElementType, text: string, action: () => void }) => {
     return (
         <Command.Item
             onSelect={action}

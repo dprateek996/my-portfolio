@@ -1,4 +1,18 @@
 
+interface PlaylistItem {
+    snippet: {
+        title: string;
+        videoOwnerChannelTitle: string;
+        publishedAt: string;
+        thumbnails: {
+            medium: { url: string };
+        };
+        resourceId: {
+            videoId: string;
+        };
+    };
+}
+
 export const getLatestVideo = async () => {
     const API_KEY = process.env.YOUTUBE_API_KEY;
     const PLAYLIST_ID = process.env.YOUTUBE_PLAYLIST_ID;
@@ -8,7 +22,7 @@ export const getLatestVideo = async () => {
     }
 
     const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=1&key=${API_KEY}`
+        `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=50&key=${API_KEY}`
     );
 
     if (!response.ok) {
@@ -16,7 +30,13 @@ export const getLatestVideo = async () => {
     }
 
     const data = await response.json();
-    const item = data.items[0]?.snippet;
+
+    // Sort items by publishedAt date in descending order (newest first)
+    const sortedItems = (data.items || []).sort((a: PlaylistItem, b: PlaylistItem) => {
+        return new Date(b.snippet.publishedAt).getTime() - new Date(a.snippet.publishedAt).getTime();
+    });
+
+    const item = sortedItems[0]?.snippet;
 
     if (!item) return null;
 

@@ -31,6 +31,7 @@ export default async function handler(
         }
 
         // results[0] is a MusicShelf, the actual songs are in its contents
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const musicShelf: any = results[0];
         const songs = musicShelf.contents;
 
@@ -39,6 +40,7 @@ export default async function handler(
             return res.status(404).json({ error: 'No results found' });
         }
 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const firstSong: any = songs[0];
 
         // Extract data from the nested structure
