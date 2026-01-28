@@ -2,6 +2,7 @@ import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 import { VoiceTrackerDiagram } from "@/components/diagrams/VoiceTrackerDiagram";
 import { NexusNoteDiagram } from "@/components/diagrams/NexusNoteDiagram";
 import { ChatExporterDiagram } from "@/components/diagrams/ChatExporterDiagram";
+import { CineQuestDiagram } from "@/components/diagrams/CineQuestDiagram";
 
 export const PERSONAL_INFO = {
     name: "Prateek Dwivedi",
@@ -25,6 +26,16 @@ export const PROJECTS = [
         link: "https://github.com/dprateek996/voice-expense-tracker",
         gradient: "from-blue-500/20 to-cyan-500/20",
         Diagram: VoiceTrackerDiagram,
+        featured: true,
+    },
+    {
+        id: "cinequest",
+        title: "CineQuest",
+        description: "Frame-by-frame movie trivia game. Guess Bollywood and Hollywood movies from blurred posters.",
+        tech: ["Next.js", "React", "Tailwind", "Gemini API"],
+        link: "https://cinequest.prateekdwivedi.me/",
+        gradient: "from-yellow-500/20 to-orange-500/20",
+        Diagram: CineQuestDiagram,
         featured: true,
     },
     {
