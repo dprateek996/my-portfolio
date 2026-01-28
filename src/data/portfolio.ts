@@ -23,7 +23,7 @@ export const PROJECTS = [
         title: "Voice Expense Tracker",
         description: "A financial dashboard that listens. Log expenses via natural language using custom Regex parsing and Web Speech API.",
         tech: ["React", "Node.js", "MongoDB", "Web Speech API"],
-        link: "https://github.com/dprateek996/voice-expense-tracker",
+        link: "https://voex.prateekdwivedi.me/",
         gradient: "from-blue-500/20 to-cyan-500/20",
         Diagram: VoiceTrackerDiagram,
         featured: true,
