@@ -20,7 +20,7 @@ export const PROJECTS = [
         description: "Full-stack e-commerce platform for luxury fragrances. Includes product management, cart logic, and responsive UI.",
         tech: ["React", "Node.js", "Express", "CSS Modules"],
         link: "https://perfume-gallery.prateekdwivedi.me",
-        image: "/projects/perfume-gallery.png?v=2",
+        image: "/projects/perfume-gallery.png?v=3",
         gradient: "from-rose-500/20 to-amber-500/20",
     },
     {

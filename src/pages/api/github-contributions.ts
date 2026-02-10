@@ -47,11 +47,11 @@ export default async function handler(
             const response = await fetch(
                 `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${targetYear}`
             );
-
+            
             if (!response.ok) {
                 throw new Error(`Fallback API error: ${response.statusText}`);
             }
-
+            
             const data = await response.json();
             return res.status(200).json(data);
         } catch (error) {
