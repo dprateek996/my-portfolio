@@ -41,18 +41,31 @@ export default async function handler(
 
     const token = process.env.GITHUB_TOKEN;
 
-    if (!token) {
-        // Fallback to third-party API if no token
+    // Helper to fetch from third-party API
+    const fetchFromFallback = async () => {
         try {
             const response = await fetch(
                 `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${targetYear}`
             );
+
+            if (!response.ok) {
+                throw new Error(`Fallback API error: ${response.statusText}`);
+            }
+
             const data = await response.json();
             return res.status(200).json(data);
         } catch (error) {
             console.error('Fallback API error:', error);
-            return res.status(500).json({ error: 'Failed to fetch contributions' });
+            // If even fallback fails, return a 0-filled response to prevent UI from breaking
+            return res.status(200).json({
+                total: { [targetYear]: 0 },
+                contributions: []
+            });
         }
+    };
+
+    if (!token) {
+        return fetchFromFallback();
     }
 
     try {
@@ -75,14 +88,15 @@ export default async function handler(
         const data = await response.json();
 
         if (data.errors) {
-            console.error('GitHub GraphQL errors:', data.errors);
-            return res.status(500).json({ error: 'GitHub API error' });
+            console.warn('GitHub GraphQL errors, trying fallback:', data.errors);
+            return fetchFromFallback();
         }
 
         const calendar = data.data?.user?.contributionsCollection?.contributionCalendar;
 
         if (!calendar) {
-            return res.status(404).json({ error: 'No contribution data found' });
+            console.warn('No contribution data found via GraphQL, trying fallback');
+            return fetchFromFallback();
         }
 
         // Transform to match the format expected by react-activity-calendar
@@ -112,7 +126,7 @@ export default async function handler(
             contributions,
         });
     } catch (error) {
-        console.error('GitHub API error:', error);
-        return res.status(500).json({ error: 'Failed to fetch contributions' });
+        console.error('GitHub API error, trying fallback:', error);
+        return fetchFromFallback();
     }
 }

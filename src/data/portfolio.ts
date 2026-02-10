@@ -1,8 +1,4 @@
 import { Github, Linkedin, Twitter, Mail } from "lucide-react";
-import { VoiceTrackerDiagram } from "@/components/diagrams/VoiceTrackerDiagram";
-import { NexusNoteDiagram } from "@/components/diagrams/NexusNoteDiagram";
-import { ChatExporterDiagram } from "@/components/diagrams/ChatExporterDiagram";
-import { CineQuestDiagram } from "@/components/diagrams/CineQuestDiagram";
 
 export const PERSONAL_INFO = {
     name: "Prateek Dwivedi",
@@ -19,14 +15,31 @@ export const PERSONAL_INFO = {
 
 export const PROJECTS = [
     {
+        id: "perfume-gallery",
+        title: "Perfume Gallery",
+        description: "Full-stack e-commerce platform for luxury fragrances. Includes product management, cart logic, and responsive UI.",
+        tech: ["React", "Node.js", "Express", "CSS Modules"],
+        link: "https://perfume-gallery.prateekdwivedi.me",
+        image: "/projects/perfume-gallery.png?v=2",
+        gradient: "from-rose-500/20 to-amber-500/20",
+    },
+    {
         id: "voice-expense-tracker",
-        title: "Voice Expense Tracker",
+        title: "VoEx",
         description: "A financial dashboard that listens. Log expenses via natural language using custom Regex parsing and Web Speech API.",
         tech: ["React", "Node.js", "MongoDB", "Web Speech API"],
         link: "https://voex.prateekdwivedi.me/",
-        gradient: "from-blue-500/20 to-cyan-500/20",
-        Diagram: VoiceTrackerDiagram,
-        featured: true,
+        image: "/projects/voex.png?v=3",
+        gradient: "",
+    },
+    {
+        id: "chat-archive",
+        title: "ChatArchive",
+        description: "Browser extension to export and summarize chat logs into PDF/JSON using local AI processing models.",
+        tech: ["JavaScript", "Manifest V3", "GenAI", "Chrome API"],
+        link: "https://chromewebstore.google.com/detail/lhibiemihkafdkdkpfolbadmbndphleh?utm_source=item-share-cb",
+        image: "/projects/chat-archive.png?v=2",
+        gradient: "from-accent-500/20 to-green-500/20",
     },
     {
         id: "cinequest",
@@ -34,27 +47,8 @@ export const PROJECTS = [
         description: "Frame-by-frame movie trivia game. Guess Bollywood and Hollywood movies from blurred posters.",
         tech: ["Next.js", "React", "Tailwind", "Gemini API"],
         link: "https://cinequest.prateekdwivedi.me/",
-        gradient: "from-yellow-500/20 to-orange-500/20",
-        Diagram: CineQuestDiagram,
-        featured: true,
-    },
-    {
-        id: "nexusnote",
-        title: "NexusNote",
-        description: "An intelligent productivity canvas for organizing thoughts. Features a sticky-note interface with real-time state management.",
-        tech: ["Next.js", "TypeScript", "Tailwind", "Zustand"],
-        link: "https://github.com/dprateek996/nexusnote",
-        gradient: "from-purple-500/20 to-pink-500/20",
-        Diagram: NexusNoteDiagram,
-    },
-    {
-        id: "chat-exporter",
-        title: "Chat Exporter AI",
-        description: "Browser extension to export and summarize chat logs into PDF/JSON using local AI processing models.",
-        tech: ["JavaScript", "Manifest V3", "GenAI", "Chrome API"],
-        link: "https://github.com/dprateek996/chat_exporter",
-        gradient: "from-accent-500/20 to-green-500/20",
-        Diagram: ChatExporterDiagram,
+        image: "/projects/cinequest.png?v=3",
+        gradient: "",
     },
 ];
 
@@ -95,11 +89,11 @@ export const EXTRA_PROJECTS = [
         repo: "https://github.com/dprateek996/Pinterest-Backend"
     },
     {
-        title: "Perfume Gallery",
-        description: "Full-stack e-commerce platform for luxury fragrances. Includes product management, cart logic, and responsive UI.",
-        tech: ["React", "Node.js", "Express", "CSS Modules"],
-        link: "https://perfume-gallery.vercel.app",
-        repo: "https://github.com/dprateek996/perfume-gallery"
+        title: "NexusNote",
+        description: "An intelligent productivity canvas for organizing thoughts. Features a sticky-note interface with real-time state management.",
+        tech: ["Next.js", "TypeScript", "Tailwind", "Zustand"],
+        link: "https://github.com/dprateek996/nexusnote",
+        repo: "https://github.com/dprateek996/nexusnote"
     },
     {
         title: "Realtime Tracker",

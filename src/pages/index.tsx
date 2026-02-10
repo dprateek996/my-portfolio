@@ -1,7 +1,7 @@
 import React from "react";
 import { Inter, Space_Grotesk } from "next/font/google";
 import { AnimatePresence, motion } from "framer-motion";
-import { MapPin, ArrowUpRight, Terminal } from "lucide-react";
+import { MapPin, ArrowUpRight } from "lucide-react";
 import dynamic from 'next/dynamic';
 import Image from 'next/image';
 
@@ -280,70 +280,59 @@ export default function Portfolio() {
             <section className="mb-8">
               <h2 className={`${spaceGrotesk.className} text-lg font-bold text-black dark:text-white mb-3`}>Projects</h2>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Featured Project - Full Width */}
-                {PROJECTS.filter(p => p.featured).map((project, i) => (
-                  <SpotlightCard
-                    key={i}
-                    className="md:col-span-2 p-6 group relative overflow-hidden"
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                {PROJECTS.map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.08, duration: 0.4 }}
+                    viewport={{ once: true }}
                   >
-                    <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${project.gradient} blur-[80px] rounded-full opacity-0 group-hover:opacity-20 transition-opacity duration-500 pointer-events-none`} />
+                    <SpotlightCard
+                      className="p-0 group relative overflow-hidden h-full"
+                    >
+                      {/* Gradient glow on hover */}
+                      {project.gradient && (
+                        <div className={`absolute top-0 right-0 w-64 h-64 bg-gradient-to-br ${project.gradient} blur-[80px] rounded-full opacity-0 group-hover:opacity-30 transition-opacity duration-500 pointer-events-none`} />
+                      )}
 
-                    <div className="relative z-10">
-                      <div className="flex justify-between items-start mb-3">
-                        <span className="inline-block px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-accent-500/10 text-accent-500 border border-accent-500/20">
-                          Featured
-                        </span>
-                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors p-1.5 hover:bg-zinc-100 dark:hover:bg-neutral-800 rounded">
-                          <ArrowUpRight size={18} />
-                        </a>
-                      </div>
-
-                      <h3 className={`${spaceGrotesk.className} text-xl font-bold text-black dark:text-white mb-1.5`}>{project.title}</h3>
-                      <p className="text-neutral-600 dark:text-neutral-400 leading-snug mb-3 text-sm">{project.description}</p>
-
-                      <div className="flex flex-wrap gap-2">
-                        {project.tech.map(t => (
-                          <span key={t} className="text-xs font-medium text-neutral-600 dark:text-neutral-400 bg-transparent border border-dashed border-zinc-300 dark:border-neutral-600 px-2.5 py-1 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-400 hover:text-accent-400 hover:bg-zinc-100 dark:hover:bg-neutral-900 cursor-default">
-                            {t}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-                  </SpotlightCard>
-                ))}
-
-                {/* Other Projects */}
-                {PROJECTS.filter(p => !p.featured).map((project, i) => (
-                  <SpotlightCard
-                    key={i}
-                    className="p-5 group relative overflow-hidden"
-                  >
-                    <div className="relative z-10 flex flex-col h-full">
-                      <div className="flex justify-between items-start mb-3">
-                        <div className="p-2 bg-zinc-100/50 dark:bg-neutral-800/50 rounded-lg border border-zinc-200/50 dark:border-neutral-700/50">
-                          <Terminal size={16} className="text-neutral-400" />
+                      {/* Image Frame */}
+                      <a href={project.link} target="_blank" rel="noreferrer" className="block relative">
+                        <div className="relative aspect-[16/10] overflow-hidden rounded-t-[inherit] border-b border-zinc-200/50 dark:border-neutral-800/50">
+                          <Image
+                            src={project.image}
+                            alt={project.title}
+                            fill
+                            className="object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            unoptimized
+                          />
+                          {/* Subtle overlay for dark mode readability */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 dark:opacity-40 transition-opacity" />
                         </div>
-                        <a href={project.link} target="_blank" className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors">
-                          <ArrowUpRight size={16} />
-                        </a>
-                      </div>
+                      </a>
 
-                      <h3 className={`${spaceGrotesk.className} text-base font-bold text-black dark:text-white mb-1`}>{project.title}</h3>
-                      <p className="text-[11px] text-neutral-500 leading-snug mb-2 line-clamp-2">{project.description}</p>
+                      {/* Description Area */}
+                      <div className="relative z-10 p-5">
+                        <div className="flex justify-between items-start mb-2">
+                          <h3 className={`${spaceGrotesk.className} text-base font-bold text-black dark:text-white`}>{project.title}</h3>
+                          <a href={project.link} target="_blank" rel="noreferrer" className="text-neutral-500 hover:text-black dark:hover:text-white transition-colors p-1 hover:bg-zinc-100 dark:hover:bg-neutral-800 rounded shrink-0">
+                            <ArrowUpRight size={16} />
+                          </a>
+                        </div>
+                        <p className="text-[12px] text-neutral-500 dark:text-neutral-400 leading-relaxed mb-3 line-clamp-2">{project.description}</p>
 
-                      <div className="flex flex-wrap gap-1.5 mt-auto pt-3">
-                        {project.tech.map((tech) => (
-                          <span
-                            key={tech}
-                            className="text-[10px] text-neutral-600 dark:text-neutral-400 bg-transparent border border-dashed border-zinc-300 dark:border-neutral-700 px-2 py-0.5 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-500 hover:text-accent-400 hover:bg-zinc-100 dark:hover:bg-neutral-900 cursor-default"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                        <div className="flex flex-wrap gap-1.5">
+                          {project.tech.map((t) => (
+                            <span key={t} className="text-[10px] font-medium text-neutral-600 dark:text-neutral-400 bg-transparent border border-dashed border-zinc-300 dark:border-neutral-700 px-2 py-0.5 rounded-md transition-all duration-300 hover:scale-105 hover:border-accent-500 hover:text-accent-400 hover:bg-zinc-100 dark:hover:bg-neutral-900 cursor-default">
+                              {t}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                  </SpotlightCard>
+                    </SpotlightCard>
+                  </motion.div>
                 ))}
               </div>
 
@@ -364,7 +353,7 @@ export default function Portfolio() {
                   {EXTRA_PROJECTS.map((project, i) => (
                     <motion.a
                       key={i}
-                      href={project.repo}
+                      href={project.link || project.repo}
                       target="_blank"
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
