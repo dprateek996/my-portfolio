@@ -26,6 +26,8 @@ const ActivityCalendar = dynamic(() => import('react-activity-calendar').then(mo
   loading: () => <div className="h-28 w-full bg-neutral-900/50 animate-pulse rounded-lg" />
 });
 
+import VisitorCounter from "@/components/VisitorCounter";
+
 // Fonts
 const inter = Inter({ subsets: ["latin"] });
 const spaceGrotesk = Space_Grotesk({ subsets: ["latin"] });
@@ -543,7 +545,8 @@ export default function Portfolio() {
             </section>
 
             {/* Footer */}
-            <footer className="py-4 text-center text-neutral-400 dark:text-neutral-700 text-[10px] border-t border-zinc-200 dark:border-neutral-900">
+            <footer className="py-8 flex flex-col items-center gap-4 text-center text-neutral-400 dark:text-neutral-700 text-[10px] border-t border-zinc-200 dark:border-neutral-900">
+              <VisitorCounter />
               <p>© 2026 {PERSONAL_INFO.name}</p>
             </footer>
 
