@@ -20,7 +20,7 @@ const items = [
     {
         icon: FileText,
         label: "Resume",
-        href: "/resume.pdf",
+        href: "/PRATEEK.pdf",
         external: true
     },
     {
