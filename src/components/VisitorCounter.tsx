@@ -2,26 +2,33 @@ import { useEffect, useRef } from 'react';
 import useSWR from 'swr';
 import { Users } from 'lucide-react';
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).catch(() => ({ count: 0 }));
 
 export default function VisitorCounter() {
-    const { data, mutate } = useSWR('/api/visitor-count', fetcher);
+    const { data, error, mutate } = useSWR('/api/visitor-count', fetcher);
     const hasCalledRef = useRef(false);
 
     useEffect(() => {
-        const visited = sessionStorage.getItem('visited');
-        if (!visited && !hasCalledRef.current) {
-            hasCalledRef.current = true;
-            fetch('/api/visitor-count', { method: 'POST' })
-                .then((res) => res.json())
-                .then((newData) => {
-                    mutate(newData, false);
-                    sessionStorage.setItem('visited', 'true');
-                });
+        try {
+            const visited = sessionStorage.getItem('visited');
+            if (!visited && !hasCalledRef.current) {
+                hasCalledRef.current = true;
+                fetch('/api/visitor-count', { method: 'POST' })
+                    .then((res) => res.json())
+                    .then((newData) => {
+                        mutate(newData, false);
+                        sessionStorage.setItem('visited', 'true');
+                    })
+                    .catch(() => {
+                        // Silently fail — don't crash the page
+                    });
+            }
+        } catch {
+            // sessionStorage may not be available
         }
     }, [mutate]);
 
-    if (!data) return (
+    if (!data && !error) return (
         <div className="h-7 w-24 bg-zinc-100 dark:bg-zinc-900/50 rounded-full animate-pulse" />
     );
 

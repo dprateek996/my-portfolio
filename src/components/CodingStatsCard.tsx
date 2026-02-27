@@ -2,7 +2,7 @@ import { Code } from "lucide-react";
 import { motion } from "framer-motion";
 import useSWR from "swr";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).catch(() => ({ isActive: false, hours: '—', dateLabel: '' }));
 
 export const CodingStatsCard = () => {
     const { data, error } = useSWR('/api/wakatime', fetcher, {

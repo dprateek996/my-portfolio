@@ -41,19 +41,55 @@ export default async function handler(
 
     const token = process.env.GITHUB_TOKEN;
 
-    // Helper to fetch from third-party API
+    // Helper to scrape directly from github user page if token fails or third-party api goes down
     const fetchFromFallback = async () => {
         try {
-            const response = await fetch(
-                `https://github-contributions-api.jogruber.de/v4/${GITHUB_USERNAME}?y=${targetYear}`
-            );
-            
+            const url = `https://github.com/users/${GITHUB_USERNAME}/contributions?from=${targetYear}-01-01&to=${targetYear}-12-31`;
+            const response = await fetch(url);
+
             if (!response.ok) {
-                throw new Error(`Fallback API error: ${response.statusText}`);
+                throw new Error(`GitHub HTML fetch error: ${response.statusText}`);
             }
-            
-            const data = await response.json();
-            return res.status(200).json(data);
+
+            const html = await response.text();
+
+            const contributions: ContributionDay[] = [];
+            let total = 0;
+
+            // Regex to parse the contribution graph cells
+            const tdRegex = /<td\s[^>]*data-date="([^"]+)"[^>]*id="([^"]+)"[^>]*data-level="([^"]+)"[^>]*>/g;
+            let match;
+
+            while ((match = tdRegex.exec(html)) !== null) {
+                const [, date, id, levelStr] = match;
+                const level = parseInt(levelStr, 10) || 0;
+
+                let count = 0;
+                const tooltipRegex = new RegExp(`<tool-tip[^>]*for="${id}"[^>]*>([^<]+)</tool-tip>`);
+                const tooltipMatch = html.match(tooltipRegex);
+
+                if (tooltipMatch) {
+                    const text = tooltipMatch[1];
+                    if (!text.startsWith('No contributions')) {
+                        const countMatch = text.match(/^(\d+)\s+contribution/);
+                        if (countMatch) {
+                            count = parseInt(countMatch[1], 10);
+                            total += count;
+                        }
+                    }
+                }
+
+                contributions.push({ date, count, level });
+            }
+
+            if (contributions.length === 0) {
+                throw new Error("No contribution data parsed from HTML");
+            }
+
+            return res.status(200).json({
+                total: { [targetYear]: total },
+                contributions
+            });
         } catch (error) {
             console.error('Fallback API error:', error);
             // If even fallback fails, return a 0-filled response to prevent UI from breaking

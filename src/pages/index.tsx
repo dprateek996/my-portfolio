@@ -27,6 +27,7 @@ const ActivityCalendar = dynamic(() => import('react-activity-calendar').then(mo
 });
 
 import VisitorCounter from "@/components/VisitorCounter";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // Fonts
 const inter = Inter({ subsets: ["latin"] });
@@ -234,21 +235,27 @@ export default function Portfolio() {
 
                     {/* Spotify */}
                     <div className="shrink-0">
-                      <SpotifyCard />
+                      <ErrorBoundary>
+                        <SpotifyCard />
+                      </ErrorBoundary>
                     </div>
 
                     <span className="opacity-10 hidden md:block text-zinc-500">•</span>
 
                     {/* Coding */}
                     <div className="shrink-0">
-                      <CodingStatsCard />
+                      <ErrorBoundary>
+                        <CodingStatsCard />
+                      </ErrorBoundary>
                     </div>
 
                     <span className="opacity-10 hidden md:block text-zinc-500">•</span>
 
                     {/* Learning */}
                     <div className="shrink-0 col-span-2 md:col-span-1">
-                      <CurrentlyLearning />
+                      <ErrorBoundary>
+                        <CurrentlyLearning />
+                      </ErrorBoundary>
                     </div>
                   </div>
                 </div>
@@ -492,45 +499,53 @@ export default function Portfolio() {
                 </a>
               </div>
               <SpotlightCard className="p-6">
-                {/* Contribution count label */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-sm text-neutral-600 dark:text-neutral-400">
-                    <span className="font-semibold text-black dark:text-white">{yearData[visibleYear]?.total || 0}</span> contributions in {visibleYear}
-                  </span>
-                  <div className="flex gap-2">
-                    {[2025, 2026].map((year) => (
-                      <button
-                        key={year}
-                        onClick={() => setVisibleYear(year)}
-                        className={`text-xs px-2 py-1 rounded transition-all ${visibleYear === year
-                          ? 'bg-accent-500/20 text-accent-400 font-medium'
-                          : 'text-neutral-500 hover:text-black dark:hover:text-white'
-                          }`}
-                      >
-                        {year}
-                      </button>
-                    ))}
+                <ErrorBoundary fallback={<div className="text-sm text-neutral-500 py-4">GitHub activity unavailable</div>}>
+                  {/* Contribution count label */}
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-sm text-neutral-600 dark:text-neutral-400">
+                      <span className="font-semibold text-black dark:text-white">{yearData[visibleYear]?.total || 0}</span> contributions in {visibleYear}
+                    </span>
+                    <div className="flex gap-2">
+                      {[2025, 2026].map((year) => (
+                        <button
+                          key={year}
+                          onClick={() => setVisibleYear(year)}
+                          className={`text-xs px-2 py-1 rounded transition-all ${visibleYear === year
+                            ? 'bg-accent-500/20 text-accent-400 font-medium'
+                            : 'text-neutral-500 hover:text-black dark:hover:text-white'
+                            }`}
+                        >
+                          {year}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
-                <div className="w-full overflow-x-auto custom-scrollbar opacity-90 hover:opacity-100 transition-opacity flex justify-end py-2 mb-8">
-                  <ActivityCalendar
-                    data={yearData[visibleYear]?.contributions || []}
-                    loading={Object.keys(yearData).length === 0}
-                    blockSize={12}
-                    blockRadius={2}
-                    blockMargin={3}
-                    fontSize={12}
-                    theme={{
-                      dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
-                      light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
-                    }}
-                    colorScheme={isDarkMode ? 'dark' : 'light'}
-                    showWeekdayLabels={true}
-                  />
-                </div>
+                  <div className="w-full overflow-x-auto custom-scrollbar opacity-90 hover:opacity-100 transition-opacity flex justify-end py-2 mb-8">
+                    {yearData[visibleYear]?.contributions?.length > 0 ? (
+                      <ActivityCalendar
+                        data={yearData[visibleYear].contributions}
+                        loading={Object.keys(yearData).length === 0}
+                        blockSize={12}
+                        blockRadius={2}
+                        blockMargin={3}
+                        fontSize={12}
+                        theme={{
+                          dark: ['#161b22', '#0e4429', '#006d32', '#26a641', '#39d353'],
+                          light: ['#ebedf0', '#9be9a8', '#40c463', '#30a14e', '#216e39'],
+                        }}
+                        colorScheme={isDarkMode ? 'dark' : 'light'}
+                        showWeekdayLabels={true}
+                      />
+                    ) : (
+                      <div className="h-28 w-full flex items-center justify-center text-sm text-neutral-500 border border-dashed border-neutral-300 dark:border-neutral-800 rounded-lg">
+                        {isLoading ? "Loading activity..." : "No activity data available"}
+                      </div>
+                    )}
+                  </div>
 
-                {/* Real GitHub PRs List */}
-                <GitHubContributions />
+                  {/* Real GitHub PRs List */}
+                  <GitHubContributions />
+                </ErrorBoundary>
               </SpotlightCard>
             </section>
 
@@ -546,7 +561,9 @@ export default function Portfolio() {
 
             {/* Footer */}
             <footer className="py-8 flex flex-col items-center gap-4 text-center text-neutral-400 dark:text-neutral-700 text-[10px] border-t border-zinc-200 dark:border-neutral-900">
-              <VisitorCounter />
+              <ErrorBoundary>
+                <VisitorCounter />
+              </ErrorBoundary>
               <p>© 2026 {PERSONAL_INFO.name}</p>
             </footer>
 

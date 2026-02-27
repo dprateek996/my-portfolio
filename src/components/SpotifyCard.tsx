@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import useSWR from "swr";
 import Image from "next/image";
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+const fetcher = (url: string) => fetch(url).then((res) => res.json()).catch(() => ({ isPlaying: false }));
 
 export const SpotifyCard = () => {
     const { data, error } = useSWR('/api/spotify', fetcher, {
